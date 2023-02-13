@@ -1,10 +1,10 @@
 <template #default="{route,Component}">
   <div :class="isshow !== 1 ? 'active' : 'wrapper' && `animate__animated ${$route.meta.transition}`">
     <el-form ref="ruleFormRef" :model="ruleForm" :rules="rules" label-width="120px" class="demo-ruleForm">
-      <el-form-item prop="username">
+      <el-form-item label="用户名" prop="username">
         <el-input v-model="ruleForm.username" type="text" autocomplete="off" />
       </el-form-item>
-      <el-form-item prop="pwd">
+      <el-form-item label="密码" prop="pwd">
         <el-input v-model="ruleForm.pwd" type="password" autocomplete="off" />
       </el-form-item>
       <el-form-item>
@@ -21,17 +21,19 @@
 </template>
 <script setup lang='ts'>
 import { ref, reactive, toRefs } from 'vue'
-import { adminLoginApi } from '@/request/api'
+import { adminLoginApi, adminInfoApi } from '@/request/api'
 import './login.css'
 import 'animate.css';
+import { useRouter } from 'vue-router'
+let router = useRouter()
 type Loginitf = {
   username: string
   pwd: string
 }
 const state = reactive({
   ruleForm: {
-    username: "",
-    pwd: ''
+    username: "admin",
+    pwd: '123456'
   }
 })
 let { ruleForm } = toRefs(state)
@@ -55,12 +57,22 @@ const rules = reactive({
 })
 
 const submitForm = () => {
-  // isshow.value = 2
-  ruleFormRef.value.validate().then(() => {
-
-  }).catch(() => {
-
+  adminInfoApi().then(res=>{
+    console.log(res);
   })
+  return
+  ruleFormRef.value.validate().then(() => {
+    adminLoginApi(ruleForm.value).then(res => {
+
+      if (res.code === 200) {
+        console.log(res);
+        isshow.value = 2
+        setTimeout(() => {
+          router.push('../home')
+        }, 800)
+      }
+    })
+  }).catch(() => { })
 }
 </script>
 <style lang='less' scoped>

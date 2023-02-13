@@ -5,14 +5,23 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
-      name: 'home',
+      path: '/login',
+      name: 'login',
       component: () => import ('../views/login/login.vue'),
       meta:{
         title:"登陆页面",
         transition:"animate__fadeIn"
       }
     },
+    {
+      path: '/home',
+      name: 'home',
+      component: () => import ('../views/home/home.vue'),
+      meta:{
+        title:"首页",
+        transition:"animate__fadeIn"
+      }
+    }
   ]
 })
 
