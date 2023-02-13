@@ -57,8 +57,11 @@ const rules = reactive({
 })
 
 const submitForm = () => {
-  adminInfoApi().then(res=>{
-    console.log(res);
+  adminInfoApi().then(res => {
+    if (res.code === 200) {
+      console.log(res);
+
+    }
   })
   return
   ruleFormRef.value.validate().then(() => {

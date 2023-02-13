@@ -13,7 +13,10 @@ interface ManageResult<T> {
 interface AdminLoginRes{
   token:string
 }
+interface AdminInfo {
+  menu:[]
+}
 
 export const adminLoginApi = (data:AdminLoginData):PromiseRes<AdminLoginRes> => request.get('/user/list',{params:data})
 
-export const adminInfoApi = () => request.get('/info/list')
+export const adminInfoApi = ():PromiseRes<AdminInfo> => request.get('/info/list')
