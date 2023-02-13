@@ -25,11 +25,22 @@ import { adminLoginApi, adminInfoApi } from '@/request/api'
 import './login.css'
 import 'animate.css';
 import { useRouter } from 'vue-router'
+import { useInfoStore } from '@/stores/counter'
+
 let router = useRouter()
+const infoStore = useInfoStore()
 type Loginitf = {
   username: string
   pwd: string
 }
+interface AdminInfo {
+  code: number;
+  data: {
+    menu: { parentId: number; id: number; children?: any[] | undefined; name: string; }[];
+  }[];
+}
+
+
 const state = reactive({
   ruleForm: {
     username: "admin",
@@ -57,19 +68,18 @@ const rules = reactive({
 })
 
 const submitForm = () => {
-  adminInfoApi().then(res => {
-    if (res.code === 200) {
-      console.log(res);
 
-    }
-  })
-  return
   ruleFormRef.value.validate().then(() => {
     adminLoginApi(ruleForm.value).then(res => {
 
       if (res.code === 200) {
         console.log(res);
         isshow.value = 2
+        adminInfoApi().then((res: AdminInfo) => {
+          if (res.code === 200) {
+            infoStore.menu = res.data[0].menu
+          }
+        })
         setTimeout(() => {
           router.push('../home')
         }, 800)
