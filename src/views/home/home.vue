@@ -2,7 +2,7 @@
   <div class="container" :class="`animate__animated ${$route.meta.transition}`">
     <div class="header">头部</div>
     <div class="menu">
-      <el-menu active-text-color="#ffd04b" background-color="#ffffff" class="el-menu-vertical-demo" default-active="0"
+      <el-menu active-text-color="#409eff" background-color="#ffffff" class="el-menu-vertical-demo" default-active="0"
         text-color="#000" @open="handleOpen" @close="handleClose" :unique-opened="true" :router="true">
         <el-sub-menu :index="menus.id + ''" v-for="menus, index in  newMenus" :key="menus.id">
           <template #title>
