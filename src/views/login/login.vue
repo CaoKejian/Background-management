@@ -82,7 +82,7 @@ const submitForm = () => {
           }
         })
         setTimeout(() => {
-          router.push('../home')
+          router.push('/index')
         }, 800)
       }
     })

@@ -16,6 +16,13 @@
           </template>
         </el-sub-menu>
       </el-menu>
+      <div class="menu-bottom">
+        <ul>
+          <li>
+            <Menu style="color:#262626;width: 1.2em; height: 1.2em; margin-right: 0" />
+          </li>
+        </ul>
+      </div>
     </div>
     <div class="content">
       <router-view></router-view>
@@ -30,7 +37,7 @@ const useInfo = useInfoStore()
 interface MenuObj {
   parentId: number
   id: number
-  icon: string
+  icon?: string
   hidden?: 0 | 1
   title?: string
   children?: MenuObj[]
@@ -52,32 +59,45 @@ const handleClose = (key: string, keyPath: string[]) => {
   position: relative;
 
   .header {
-    height: 4.375rem;
+    height: 3rem;
+    line-height: 3rem;
     background-color: #001529;
 
   }
 
   .menu {
     position: absolute;
-    width: 15.625rem;
-    top: 4.375rem;
+    width: 13rem;
+    top: 3rem;
     left: 0;
     bottom: 0;
-    background-color: rgb(47, 47, 129);
+    background-color: #fff;
 
     :deep(svg) {
-      font-size: 16px;
-      font-weight: bold;
+      font-size: 18px;
     }
 
+    &-bottom {
+      width: 13rem;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+
+      ul {
+        width: 100%;
+        height: 2.5rem;
+        border-top: 1px solid #efefef;
+        padding: .625rem 0 0 1rem;
+      }
+    }
 
   }
 
   .content {
     position: absolute;
-    top: 4.375rem;
+    top: 3rem;
     right: 0;
-    left: 15.625rem;
+    left: 13rem;
     bottom: 0;
     background-color: skyblue;
   }

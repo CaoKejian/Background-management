@@ -55,7 +55,7 @@ const setTitle = (to: RouteLocationNormalized) => {
 interface MenuObj {
   parentId: number
   id: number
-  children: MenuObj[]
+  children: MenuObj[] 
   name: string
 }
 type NewMenus = {
@@ -70,7 +70,7 @@ router.beforeEach((to, from, next) => {
       path: '/' + newMenus[key].name,
       name: newMenus[key].name,
       component: () => import('../views/home/home.vue'),
-      redirect: '/' + newMenus[key].name + '/' + newMenus[key].children[0]?.name,
+      redirect: '/' + newMenus[key].name + '/' + newMenus[key].children[0].name,
       children: [] as any[]
     }
     for (let i = 0; i < newMenus[key].children.length; i++) {

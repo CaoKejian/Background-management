@@ -4,7 +4,7 @@ import { defineStore } from 'pinia'
 interface MenuObj {
   parentId:number
   id:number
-  children:MenuObj[]
+  children?:MenuObj[]
   name:string
 }
 type NewMenus = {
@@ -36,7 +36,7 @@ export const useInfoStore = defineStore('info', {
       return newMenus
     },
     getNewLocalMenus(state){
-      const newMenus:NewMenus = {}
+      const newMenus:any = {}
       const menus = JSON.parse(localStorage.getItem('pinia-info') as string).menu 
       for(let i = 0; i < menus.length;i++){
         if(menus[i].parentId === 0){
