@@ -34,6 +34,23 @@ export const useInfoStore = defineStore('info', {
         }
       }
       return newMenus
+    },
+    getNewLocalMenus(state){
+      const newMenus:NEwMenus = {}
+      const menus = JSON.parse(localStorage.getItem('pinia-info') as string).menu 
+      for(let i = 0; i < menus.length;i++){
+        if(menus[i].parentId === 0){
+          // 一级菜单
+          newMenus[menus[i].id] ={...menus[i],children:newMenus[menus[i].id]?.children || []} 
+        }else{
+          // 二级菜单
+          let parentId =  menus[i].parentId
+          newMenus[parentId] = newMenus[parentId] || {}
+          newMenus[parentId].children = newMenus[parentId].children || []
+          newMenus[parentId].children?.push(menus[i])
+        }
+      }
+      return newMenus
     }
   },
   actions:{

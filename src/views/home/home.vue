@@ -10,7 +10,7 @@
             <span>{{ menus.title }}</span>
           </template>
           <template v-for="submenu in   menus.children" :key="submenu.id">
-            <el-menu-item :index="' /' + menus.name + '/' + submenu.name" v-if="!submenu.hidden">{{
+            <el-menu-item :index="'/' + menus.name + '/' + submenu.name">{{
               submenu.title
             }}</el-menu-item>
           </template>
