@@ -8,6 +8,7 @@ const store = createPinia()
 import './assets/css/reset.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import './assets/fonts/iconfont.css'
+import svgIcon from './icons/index.vue'
 
 type Options = {
   key : string
@@ -44,3 +45,4 @@ app.use(store)
 app.use(router)
 app.use(ElementPlus)
 app.mount('#app')
+app.component('svg-icon', svgIcon)

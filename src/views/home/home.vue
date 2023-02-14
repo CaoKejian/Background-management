@@ -1,6 +1,11 @@
 <template>
   <div class="container" :class="`animate__animated ${$route.meta.transition}`">
-    <div class="header">头部</div>
+    <div class="header">
+      <div class="svg">
+        <svg-icon name="logo" class="logo-svg" />
+        <span>Background management system</span>
+      </div>
+    </div>
     <div class="menu">
       <el-menu active-text-color="#409eff" background-color="#ffffff" class="el-menu-vertical-demo" default-active="0"
         text-color="#000" @open="handleOpen" @close="handleClose" :unique-opened="true" :router="true">
@@ -63,6 +68,22 @@ const handleClose = (key: string, keyPath: string[]) => {
     line-height: 3rem;
     background-color: #001529;
 
+    .svg {
+      height: 3rem;
+      padding-left: 1.25em;
+      display: flex;
+      align-items: center;
+
+      .logo-svg {
+        font-size: 30px;
+      }
+
+      span {
+        height: 3rem;
+        color: #ffffff;
+        margin-left: 1.25em;
+      }
+    }
   }
 
   .menu {
