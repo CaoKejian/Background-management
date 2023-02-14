@@ -10,6 +10,7 @@
     "type-check": "vue-tsc --noEmit"
   },
   "dependencies": {
+    "@element-plus/icons-vue": "2.0.10",
     "animate.css": "4.1.1",
     "axios": "1.2.6",
     "element-plus": "2.2.28",

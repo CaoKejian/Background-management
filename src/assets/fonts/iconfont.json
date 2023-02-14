@@ -1,0 +1,44 @@
+{
+  "id": "3895261",
+  "name": "vue3 vite Ts",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "7549350",
+      "name": "用户",
+      "font_class": "RectangleCopy",
+      "unicode": "e6a3",
+      "unicode_decimal": 59043
+    },
+    {
+      "icon_id": "7549372",
+      "name": "智慧",
+      "font_class": "RectangleCopy1",
+      "unicode": "e6a5",
+      "unicode_decimal": 59045
+    },
+    {
+      "icon_id": "7549816",
+      "name": "商品",
+      "font_class": "RectangleCopy2",
+      "unicode": "e6a7",
+      "unicode_decimal": 59047
+    },
+    {
+      "icon_id": "7549819",
+      "name": "报表",
+      "font_class": "RectangleCopy3",
+      "unicode": "e6a8",
+      "unicode_decimal": 59048
+    },
+    {
+      "icon_id": "7552713",
+      "name": "岗位授权",
+      "font_class": "RectangleCopy4",
+      "unicode": "e6d2",
+      "unicode_decimal": 59090
+    }
+  ]
+}

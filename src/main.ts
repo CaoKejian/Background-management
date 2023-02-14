@@ -6,6 +6,9 @@ import App from './App.vue'
 import router from './router'
 const store = createPinia()
 import './assets/css/reset.css'
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+import './assets/fonts/iconfont.css'
+
 type Options = {
   key : string
 }
@@ -34,7 +37,9 @@ store.use(piniaPlugin({
 
 
 const app = createApp(App)
-
+for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+  app.component(key, component)
+}
 app.use(store)
 app.use(router)
 app.use(ElementPlus)
