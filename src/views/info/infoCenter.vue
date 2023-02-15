@@ -1,5 +1,6 @@
 <template>
   <div class="wrapper">
+
     <div class="container">
       <div class="left">
         <div class="info">
@@ -37,19 +38,33 @@
           </div>
         </div>
       </div>
-      <div class="right">2</div>
+      <div class="right">
+        <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
+          <el-tab-pane label="文章" name="first">
+            <Article />
+          </el-tab-pane>
+          <el-tab-pane label="应用" name="second">应用</el-tab-pane>
+        </el-tabs>
+      </div>
     </div>
   </div>
 </template>
 <script setup lang='ts'>
 import { ref } from 'vue'
+import type { TabsPaneContext } from 'element-plus'
+import Article from './components/article.vue'
 
+const activeName = ref('first')
+
+const handleClick = (tab: TabsPaneContext, event: Event) => {
+  console.log(tab, event)
+}
 </script>
 <style lang='less' scoped>
 .wrapper {
   background-color: #f0f2f5;
+  height: 55.5625rem;
   overflow: scroll;
-  height: 2000px;
   overflow-x: hidden;
   overflow-y: hidden;
 
@@ -57,11 +72,13 @@ import { ref } from 'vue'
     width: 95%;
     height: 95%;
     position: relative;
-    top: 50%;
+    // top: 50%;
     left: 50%;
-    transform: translate(-50%, -51%);
+    top: 2.125rem;
+    transform: translateX(-50%);
     display: flex;
     justify-content: space-between;
+    padding-bottom: 30px;
 
     .left {
 
@@ -99,7 +116,6 @@ import { ref } from 'vue'
 
       .workInfo {
         cursor: pointer;
-
         width: 90%;
         margin: 0 auto;
         font-size: 14px;
@@ -172,7 +188,9 @@ import { ref } from 'vue'
     .right {
       flex: 1;
       margin-left: 1.25em;
-      background-color: skyblue;
+      background-color: #fff;
+      border-radius: 5px;
+      padding: 0 10px;
     }
   }
 

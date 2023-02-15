@@ -20,3 +20,5 @@ interface AdminLoginRes{
 export const adminLoginApi = (data:AdminLoginData):PromiseRes<AdminLoginRes> => request.get('/user/list',{params:data})
 
 export const adminInfoApi = ():Promise<any> => request.get('/info/list')
+export const articleListApi = ():Promise<any> => request.get('/article/list')
+
