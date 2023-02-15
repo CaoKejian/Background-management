@@ -7,9 +7,9 @@
       </div>
     </div>
     <div class="menu" id="menu">
-      <el-menu active-text-color="#409eff" background-color="#ffffff" class="el-menu-vertical-demo" default-active="0"
-        text-color="#000" @open="handleOpen" @close="handleClose" :unique-opened="false" :router="true">
-        <el-sub-menu :index="menus.id + ''" v-for="menus, index in  newMenus" :key="menus.id">
+      <el-menu active-text-color="#1890ff" background-color="#ffffff" class="el-menu-vertical-demo" default-active="2"
+        text-color="#000" @open="handleOpen" @close="handleClose" :unique-opened="true" :router="true">
+        <el-sub-menu :index="menus.id + ''" v-for="menus in  newMenus" :key="menus.id">
           <template #title>
             <i :class='menus.icon' style="margin-right: 10px;" id="menu-icon"></i>
             <span>{{ menus.title }}</span>
@@ -67,9 +67,13 @@ const clickMenu = () => {
   position: relative;
 
   .header {
+    width: 100%;
     height: 3rem;
     line-height: 3rem;
     background-color: #001529;
+    position: fixed;
+    top: 0;
+    z-index: 999;
 
     .svg {
       height: 3rem;
@@ -90,12 +94,13 @@ const clickMenu = () => {
   }
 
   .menu {
-    position: absolute;
+    position: fixed;
     width: 13rem;
     top: 3rem;
     left: 0;
     bottom: 0;
     background-color: #fff;
+    z-index: 999;
 
     :deep(svg) {
       font-size: 18px;
@@ -131,7 +136,6 @@ const clickMenu = () => {
     bottom: 0;
     top: 3rem;
     left: 13rem;
-    background-color: skyblue;
   }
 }
 </style>
