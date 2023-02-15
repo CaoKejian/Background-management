@@ -44,6 +44,15 @@ const router = createRouter({
   ]
 })
 
+interface MenuObj {
+  parentId: number
+  id: number
+  children: MenuObj[]
+  name: string
+}
+type NewMenus = {
+  [key: number]: MenuObj
+}
 
 const setTitle = (to: RouteLocationNormalized) => {
   if (to.meta.title == undefined) {
@@ -52,18 +61,8 @@ const setTitle = (to: RouteLocationNormalized) => {
     document.title = to.meta.title
   }
 }
-interface MenuObj {
-  parentId: number
-  id: number
-  children: MenuObj[] 
-  name: string
-}
-type NewMenus = {
-  [key: number]: MenuObj
-}
-const Vnode = createVNode(loadingBar)
-render(Vnode, document.body)
-router.beforeEach((to, from, next) => {
+
+const setNewArr = () => {
   const newMenus: NewMenus = useStore.getNewLocalMenus
   for (let key in newMenus) {
     const newRoute = {
@@ -82,9 +81,24 @@ router.beforeEach((to, from, next) => {
     }
     router.addRoute(newRoute)
   }
+}
+const Vnode = createVNode(loadingBar)
+render(Vnode, document.body)
+router.beforeEach((to, from, next) => {
+  console.log(useStore.menu.length);
+  if (useStore.menu.length === 1) {
+    useStore.getAdminInfo().then(() => {
+      setNewArr()
+      next(to)
+    })
+  } else if (useStore.menu.length !== 1 && from.path === '/login' && to.path === '/index') {
+    setNewArr()
+    next()
+  } else {
+    next()
+  }
   Vnode.component?.exposed?.startLoading()
   setTitle(to)
-  next()
 });
 router.afterEach((to, from) => {
   Vnode.component?.exposed?.endLoading()

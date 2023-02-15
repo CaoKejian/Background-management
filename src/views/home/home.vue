@@ -6,12 +6,12 @@
         <span>Background management system</span>
       </div>
     </div>
-    <div class="menu">
+    <div class="menu" id="menu">
       <el-menu active-text-color="#409eff" background-color="#ffffff" class="el-menu-vertical-demo" default-active="0"
-        text-color="#000" @open="handleOpen" @close="handleClose" :unique-opened="true" :router="true">
+        text-color="#000" @open="handleOpen" @close="handleClose" :unique-opened="false" :router="true">
         <el-sub-menu :index="menus.id + ''" v-for="menus, index in  newMenus" :key="menus.id">
           <template #title>
-            <i :class='menus.icon' style="margin-right: 10px;"></i>
+            <i :class='menus.icon' style="margin-right: 10px;" id="menu-icon"></i>
             <span>{{ menus.title }}</span>
           </template>
           <template v-for="submenu in   menus.children" :key="submenu.id">
@@ -24,7 +24,7 @@
       <div class="menu-bottom">
         <ul>
           <li>
-            <Menu style="color:#262626;width: 1.2em; height: 1.2em; margin-right: 0" />
+            <Menu @click="clickMenu" class="icon" style="width: 1.2em; height: 1.2em; margin-right: 0" />
           </li>
         </ul>
       </div>
@@ -56,6 +56,9 @@ const newMenus: NewMenus = useInfo.getNewMenus
 const handleOpen = (key: string, keyPath: string[]) => {
 }
 const handleClose = (key: string, keyPath: string[]) => {
+}
+const clickMenu = () => {
+
 }
 </script>
 <style lang='less' scoped>
@@ -99,16 +102,24 @@ const handleClose = (key: string, keyPath: string[]) => {
     }
 
     &-bottom {
-      width: 13rem;
+      width: 100%;
       position: absolute;
       bottom: 0;
-      left: 0;
 
       ul {
         width: 100%;
         height: 2.5rem;
         border-top: 1px solid #efefef;
-        padding: .625rem 0 0 1rem;
+
+        .icon {
+          cursor: pointer;
+          margin: .625rem 0 0 1rem;
+
+          &:hover {
+            color: #2696ff;
+            transition: all .3s;
+          }
+        }
       }
     }
 
@@ -116,10 +127,10 @@ const handleClose = (key: string, keyPath: string[]) => {
 
   .content {
     position: absolute;
-    top: 3rem;
     right: 0;
-    left: 13rem;
     bottom: 0;
+    top: 3rem;
+    left: 13rem;
     background-color: skyblue;
   }
 }

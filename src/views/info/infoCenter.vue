@@ -1,6 +1,6 @@
 <template>
   <div>
-    infoCenter
+    infoCenter???
   </div>
 </template>
 <script setup lang='ts'>
