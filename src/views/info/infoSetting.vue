@@ -5,16 +5,25 @@
         <ul>
           <li v-for="(item, index) in tabButton" :key="item.ID" @click="FnStart(index)"
             :class="index === tabIndex ? 'active' : 'li'">{{ item.text }}</li>
-
         </ul>
       </div>
-      <div class="right"></div>
+      <div class="right">
+        <div class="basic" v-if="!tabIndex">
+          <div><span>基本设置</span></div>
+          <InfoSetting />
+        </div>
+        <div class="safety" v-if="tabIndex">
+          <div><span>安全设置</span></div>
+
+        </div>
+      </div>
     </div>
   </div>
 
 </template>
 <script setup lang='ts'>
 import { ref } from 'vue'
+import InfoSetting from './components/infoSetting.vue'
 
 const tabIndex = ref<number>(0)
 const tabButton = ref([
@@ -53,10 +62,10 @@ const FnStart = (index: number) => {
     .left {
       width: 15.00rem;
       height: 100%;
-      padding-top: 30px;
 
       ul {
         width: 100%;
+        margin-top: 1.875rem;
 
         .li {
           height: 40px;
@@ -110,8 +119,9 @@ const FnStart = (index: number) => {
 
     .right {
       flex: 1;
-      background-color: skyblue;
-      height: 100%;
+      background-color: #fff;
+      padding: 1.65rem;
+      font-size: 18px;
     }
   }
 }
