@@ -1,6 +1,5 @@
 <template>
   <div class="wrapper">
-
     <div class="container">
       <div class="left">
         <div class="info">
@@ -64,6 +63,7 @@ const handleClick = (tab: TabsPaneContext, event: Event) => {
 .wrapper {
   background-color: #f0f2f5;
   height: 55.5625rem;
+  height: 100%;
   overflow: scroll;
   overflow-x: hidden;
   overflow-y: hidden;
