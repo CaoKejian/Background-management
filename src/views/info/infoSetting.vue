@@ -14,12 +14,10 @@
         </div>
         <div class="safety" v-if="tabIndex">
           <div><span>安全设置</span></div>
-
         </div>
       </div>
     </div>
   </div>
-
 </template>
 <script setup lang='ts'>
 import { ref } from 'vue'
@@ -122,6 +120,7 @@ const FnStart = (index: number) => {
       background-color: #fff;
       padding: 1.65rem;
       font-size: 18px;
+
     }
   }
 }

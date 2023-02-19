@@ -46,8 +46,8 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { reactive, ref } from 'vue'
-import type { FormInstance, FormRules } from 'element-plus'
+import { reactive, ref, onMounted } from 'vue'
+import { cityListApi } from '@/request/api'
 const input = ref('1849201815@qq.com')
 const inputName = ref('Colin Cao')
 const inputPhone = ref('666532')
@@ -60,34 +60,22 @@ const ruleForm = reactive({
 const submitForm = () => {
 
 }
+let options = reactive([{}])
+onMounted(() => {
+  cityListApi().then(res => {
+    if (res.code === 200) {
+      console.log(res);
+    }
+  })
+})
+console.log(options);
 
 
-const options = [
-  {
-    value: 'Option1',
-    label: 'Option1',
-  },
-  {
-    value: 'Option2',
-    label: 'Option2',
-  },
-  {
-    value: 'Option3',
-    label: 'Option3',
-  },
-  {
-    value: 'Option4',
-    label: 'Option4',
-  },
-  {
-    value: 'Option5',
-    label: 'Option5',
-  },
-]
+
+
 </script>
 <style lang='less' scoped>
 .wrapper {
-  height: 100%;
   display: flex;
   justify-content: space-between;
   background-color: #fff;
@@ -98,6 +86,7 @@ const options = [
 
     .demo-ruleForm {
       width: 100%;
+      margin-top: 40px;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
@@ -106,6 +95,7 @@ const options = [
 
   .right {
     flex: 1;
+    padding-top: 40px;
     background-color: #fff;
     padding-left: 10.125rem;
 
