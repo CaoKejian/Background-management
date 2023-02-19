@@ -46,7 +46,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { reactive, ref, onMounted } from 'vue'
+import { reactive, ref, onMounted, toRefs } from 'vue'
 import { cityListApi } from '@/request/api'
 const input = ref('1849201815@qq.com')
 const inputName = ref('Colin Cao')
@@ -60,18 +60,24 @@ const ruleForm = reactive({
 const submitForm = () => {
 
 }
-let options = reactive([{}])
+type cityRes = {
+  name: string
+  id: string
+}
+let options = ref([])
 onMounted(() => {
   cityListApi().then(res => {
     if (res.code === 200) {
-      console.log(res);
+      const newopt: any = []
+      const data = res.data.map((v: cityRes) => {
+        newopt.push({
+          label: v.name
+        })
+      })
+      options.value = newopt
     }
   })
 })
-console.log(options);
-
-
-
 
 </script>
 <style lang='less' scoped>
@@ -116,6 +122,7 @@ console.log(options);
         width: 100%;
         height: 100%;
         border-radius: 50%;
+        object-fit: cover;
       }
     }
   }

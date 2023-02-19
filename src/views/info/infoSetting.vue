@@ -14,6 +14,7 @@
         </div>
         <div class="safety" v-if="tabIndex">
           <div><span>安全设置</span></div>
+          <SafetySetting />
         </div>
       </div>
     </div>
@@ -22,6 +23,7 @@
 <script setup lang='ts'>
 import { ref } from 'vue'
 import InfoSetting from './components/infoSetting.vue'
+import SafetySetting from './components/safetySetting.vue'
 
 const tabIndex = ref<number>(0)
 const tabButton = ref([
@@ -49,11 +51,9 @@ const FnStart = (index: number) => {
   .container {
     background-color: #fff;
     width: 95%;
-    height: 95%;
     position: relative;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    top: 40px;
+    left: 40px;
     border-radius: 5px;
     display: flex;
 
