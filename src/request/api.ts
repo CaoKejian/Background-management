@@ -17,6 +17,14 @@ interface CityRes {
   name: string,
   id: string
 }
+interface CityRes {
+  _id:string
+  username: string,
+  pdSafety: string,
+  phSafety: string,
+  mbSafety: [],
+  mailSafety: string
+}
 
 
 
@@ -25,5 +33,6 @@ export const adminLoginApi = (data: AdminLoginData): PromiseRes<AdminLoginRes> =
 export const adminInfoApi = (): Promise<any> => request.get('/info/list')
 export const articleListApi = (): Promise<any> => request.get('/article/list')
 export const cityListApi = (): PromiseRes<any> => request.get('/city/list')
+export const SafetyApi = (): Promise<CityRes> => request.get('/safety/info')
 
 

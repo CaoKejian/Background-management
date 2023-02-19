@@ -10,14 +10,14 @@
     <div class="container">
       <div class="item">
         <span>密保手机</span>
-        <span class="act">已绑定手机：{{ Safety.PhSafety }}</span>
+        <span class="act">已绑定手机：{{ Safety.phSafety }}</span>
       </div>
       <span class="reset">修改</span>
     </div>
     <div class="container">
       <div class="item">
         <span>密保问题</span>
-        <span class="act">已绑定密保：{{ Safety.mbSafety }}</span>
+        <span class="act">已绑定密保：{{ Safety.mbSafety[0].is }}</span>
       </div>
       <span class="reset">设置</span>
     </div>
@@ -32,20 +32,28 @@
   </div>
 </template>
 <script setup lang='ts'>
-import { ref, reactive, toRefs } from 'vue'
-const pdSafety = ref('强')
-const PhSafety = ref('18339296532')
-const mbSafety = ref('我的母校')
-const mailSafety = ref('1849201815@qq.com')
-const info = reactive({
-  Safety: {
-    pdSafety: '强',
-    PhSafety: "18339296532",
-    mbSafety: '我的母校',
-    mailSafety: "1849201815@qq.com"
-  }
+import { ref, reactive, toRefs, onMounted } from 'vue'
+import { SafetyApi } from '@/request/api'
+const Safety = ref({
+  _id: '',
+  pdSafety: '',
+  phSafety: '',
+  mbSafety: [{
+    is: '',
+    ans: ''
+  }],
+  mailSafety: ''
 })
-let { Safety } = toRefs(info) 
+
+onMounted(() => {
+  SafetyApi().then(res => {
+    console.log(res);
+    const data = res
+    data.phSafety = data.phSafety.replace(/^(.{3})(.{4})(.*)$/, '$1****$3');
+    data.mailSafety = data.mailSafety.replace(/^(.{4})(.{4})(.*)$/, '$1****$3');
+    Safety.value = data
+  })
+})
 </script>
 <style lang='less' scoped>
 .safety {
