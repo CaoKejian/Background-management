@@ -28,7 +28,7 @@
           <el-tab-pane label="本周" name="second">Config</el-tab-pane>
           <el-tab-pane label="本月" name="third">Role</el-tab-pane>
           <el-tab-pane label="本年" name="fourth">Task</el-tab-pane>
-         
+
         </el-tabs>
       </div>
     </div>
@@ -191,6 +191,7 @@ const initZhu2 = () => {
 
     &-box2 {
       flex: 1;
+      cursor: pointer;
 
       .panel {
         &-span {

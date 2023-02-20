@@ -18,5 +18,6 @@ import 'animate.css';
   background-color: #f0f2f5;
   width: 100%;
   padding-bottom: 20px;
+  user-select: none;
 }
 </style>

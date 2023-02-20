@@ -191,6 +191,7 @@ const initZhu = () => {
 </script>
 <style lang='less' scoped>
 .container {
+  cursor: pointer;
   width: 100%;
   min-width: 80rem;
   height: auto;

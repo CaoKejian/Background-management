@@ -46,18 +46,54 @@
         <div class="bottom1"></div>
       </div>
     </div>
+    <div class="div-bottom">
+      <el-table :data="tableData" stripe style="width: 100%">
+        <el-table-column prop="id" label="排名" width="180" />
+        <el-table-column prop="name" label="搜索关键词" width="180" />
+        <el-table-column prop="user" label="用户数" width="180" />
+        <el-table-column prop="bite" label="周涨幅" />
+      </el-table>
+      <el-pagination @current-change="handleCurrentChange" :page-size="5" :pager-count="6" layout="prev, pager, next"
+        v-model:currentPage="state.currentPage" :total="state.total" />
+    </div>
   </div>
 </template>
 <script setup lang='ts'>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, reactive, toRefs, computed } from 'vue'
 import * as echarts from 'echarts';
+import { hotSearchApi } from '@/request/api'
+
+const state = reactive<{
+  tableData: {}[],
+  currentPage: number
+  total: number
+}>({
+  tableData: [],
+  currentPage: 1,
+  total: Number('')
+})
+let { tableData, currentPage, total } = toRefs(state)
+
+const handleCurrentChange = (val: number) => {
+  currentPage.value = val
+  console.log(currentPage);
+}
+const initData = () => {
+  total.value = tableData.value.length
+  console.log(total.value);
+}
+
 onMounted(() => {
+  hotSearchApi().then(res => {
+    console.log(res);
+
+  })
   setTimeout(() => {
     initLine()
     initLine1()
+    initData()
   }, 0)
 })
-
 const initLine = () => {
   const charts = echarts.init(
     document.querySelector('.bottom') as HTMLElement
@@ -154,6 +190,7 @@ const initLine1 = () => {
 </script>
 <style lang='less' scoped>
 .wrapper1 {
+  cursor: pointer;
   width: 48.75rem;
   height: auto;
   margin-top: 20px;
@@ -224,6 +261,11 @@ const initLine1 = () => {
       }
     }
 
+  }
+
+  .div-bottom {
+    cursor: pointer;
+    user-select: none;
   }
 }
 </style>
