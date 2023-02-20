@@ -7,8 +7,9 @@
       </div>
     </div>
     <div class="menu" id="menu">
-      <el-menu active-text-color="#1890ff" background-color="#ffffff" class="el-menu-vertical-demo" default-active="2"
-        text-color="#000" @open="handleOpen" @close="handleClose" :unique-opened="true" :router="true">
+      <el-menu active-text-color="#1890ff" background-color="#ffffff" class="el-menu-vertical-demo"
+        :default-openeds="openeds" default-active="/business/businessAnalysis" text-color="#000" @open="handleOpen"
+        @close="handleClose" :unique-opened="true" :router="true">
         <el-sub-menu :index="menus.id + ''" v-for="menus in  newMenus" :key="menus.id">
           <template #title>
             <i :class='menus.icon' style="margin-right: 10px;" id="menu-icon"></i>
@@ -38,6 +39,7 @@
 import { ref } from 'vue'
 import { useInfoStore } from '@/stores/counter'
 const useInfo = useInfoStore()
+const openeds = ref(['1'])
 
 interface MenuObj {
   parentId: number

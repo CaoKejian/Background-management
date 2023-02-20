@@ -28,6 +28,7 @@
           <el-tab-pane label="本周" name="second">Config</el-tab-pane>
           <el-tab-pane label="本月" name="third">Role</el-tab-pane>
           <el-tab-pane label="本年" name="fourth">Task</el-tab-pane>
+         
         </el-tabs>
       </div>
     </div>
@@ -158,6 +159,10 @@ const initZhu2 = () => {
 }
 </script>
 <style lang='less' scoped>
+:deep(.el-tabs__nav is-top) {
+  width: 30%;
+}
+
 .container {
   width: 100%;
   height: auto;

@@ -82,13 +82,11 @@ const submitForm = () => {
           }
         })
         setTimeout(() => {
-          router.push('/index')
+          router.push('/business/businessAnalysis')
         }, 800)
       }
     })
   }).catch(() => { })
 }
 </script>
-<style lang='less' scoped>
-
-</style>
+<style lang='less' scoped></style>

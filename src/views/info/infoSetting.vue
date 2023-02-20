@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div class="wrapper" :class="`animate__animated ${$route.meta.transition}`">
     <div class="container">
       <div class="left">
         <ul>
@@ -24,6 +24,8 @@
 import { ref } from 'vue'
 import InfoSetting from './components/infoSetting.vue'
 import SafetySetting from './components/safetySetting.vue'
+import 'animate.css';
+
 
 const tabIndex = ref<number>(0)
 const tabButton = ref([

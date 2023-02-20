@@ -27,7 +27,7 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: () => import('../views/home/home.vue'),
-      redirect: '/index',
+      redirect: '/business/businessAnalysis',
       children: [
         {
           path: 'index',
@@ -77,6 +77,10 @@ const setNewArr = () => {
         path: newMenus[key].children[i].name,
         name: newMenus[key].children[i].name,
         component: () => import(`../views/${newMenus[key].name}/${newMenus[key].children[i].name}.vue`),
+        meta: {
+          title: "Colin后台页面",
+          transition: "animate__fadeIn"
+        }
       })
     }
     router.addRoute(newRoute)

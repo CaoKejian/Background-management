@@ -1,5 +1,5 @@
-<template>
-  <div class="wrapper">
+<template #default="{route,Component}">
+  <div class="wrapper" :class="`animate__animated ${$route.meta.transition}`">
     <div class="container">
       <div class="left">
         <div class="info">
@@ -52,6 +52,7 @@
 import { ref } from 'vue'
 import type { TabsPaneContext } from 'element-plus'
 import Article from './components/article.vue'
+import 'animate.css';
 
 const activeName = ref('first')
 

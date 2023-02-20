@@ -138,7 +138,16 @@ const initLine = () => {
           color: '#9861e3'
         }
       }
-    ]
+    ],
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: {
+        type: 'cross',
+        crossStyle: {
+          color: '#a76af9'
+        }
+      },
+    }
   })
 }
 const initZhu = () => {
@@ -170,7 +179,13 @@ const initZhu = () => {
           color: "#6395f9"
         }
       },
-    ]
+    ],
+    tooltip: {
+      trigger: 'axis', //坐标轴触发，主要在柱状图，折线图等会使用类目轴的图表中使用
+      axisPointer: {// 坐标轴指示器，坐标轴触发有效
+        type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+      }
+    },
   })
 }
 </script>
