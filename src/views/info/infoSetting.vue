@@ -39,7 +39,6 @@ const tabButton = ref([
   }
 ])
 const FnStart = (index: number) => {
-  console.log(index);
   tabIndex.value = index
 }
 

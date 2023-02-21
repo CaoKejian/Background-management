@@ -2,7 +2,10 @@
   <div class="wrapper" :class="`animate__animated ${$route.meta.transition}`">
     <AnalysisTop />
     <AnalysisCenter />
-    <AnalysisDiv />
+    <div class="content">
+      <AnalysisDiv />
+      <AnalysisDivRight />
+    </div>
   </div>
 </template>
 <script setup lang='ts'>
@@ -10,6 +13,7 @@ import { ref } from 'vue'
 import AnalysisTop from './components/AnalysisTop.vue';
 import AnalysisCenter from './components/AnalysisCenter.vue';
 import AnalysisDiv from './components/AnalysisDiv.vue';
+import AnalysisDivRight from './components/AnalysisDivRight.vue';
 import 'animate.css';
 // :class=``
 </script>
@@ -19,5 +23,12 @@ import 'animate.css';
   width: 100%;
   padding-bottom: 20px;
   user-select: none;
+
+  .content {
+    width: 97%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+  }
 }
 </style>

@@ -53,7 +53,7 @@
         <el-table-column prop="user" label="用户数" width="180" />
         <el-table-column prop="bite" label="周涨幅" />
       </el-table>
-      <el-pagination @current-change="handleCurrentChange" :page-size="5" :pager-count="6" layout="prev, pager, next"
+      <el-pagination @current-change="handleCurrentChange" :page-size="5" :pager-count="7" layout="prev, pager, next"
         v-model:currentPage="state.currentPage" :total="state.total" />
     </div>
   </div>
@@ -192,10 +192,10 @@ const initLine1 = () => {
 <style lang='less' scoped>
 .wrapper1 {
   cursor: pointer;
-  width: 48.75rem;
+  width: 49.75rem;
   height: auto;
   margin-top: 20px;
-  margin-left: 1.375rem;
+  // margin-left: 1.375rem;
   background-color: #fff;
 
   .title {
@@ -268,5 +268,11 @@ const initLine1 = () => {
     cursor: pointer;
     user-select: none;
   }
+}
+
+:deep(.el-pagination) {
+  position: relative;
+  top: 0;
+  bottom: 0;
 }
 </style>

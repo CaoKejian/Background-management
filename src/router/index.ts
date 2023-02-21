@@ -89,7 +89,6 @@ const setNewArr = () => {
 const Vnode = createVNode(loadingBar)
 render(Vnode, document.body)
 router.beforeEach((to, from, next) => {
-  console.log(useStore.menu.length);
   if (useStore.menu.length === 1) {
     useStore.getAdminInfo().then(() => {
       setNewArr()

@@ -73,11 +73,9 @@ const submitForm = () => {
     adminLoginApi(ruleForm.value).then(res => {
 
       if (res.code === 200) {
-        console.log(res);
         isshow.value = 2
         adminInfoApi().then((res: AdminInfo) => {
           if (res.code === 200) {
-            console.log(res);
             infoStore.menu = res.data[0].menu
           }
         })
