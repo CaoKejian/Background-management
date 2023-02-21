@@ -193,15 +193,14 @@ const initZhu = () => {
 .container {
   cursor: pointer;
   width: 100%;
-  min-width: 80rem;
-  height: auto;
+  min-width: 65.625rem;
   display: flex;
   justify-content: space-around;
 
   .box-top {
     height: 9.5em;
     width: 20%;
-    min-width: 250px;
+    min-width: 13rem;
     margin-top: 1.875em;
     background-color: #fff;
     padding: 20px;

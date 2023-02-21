@@ -64,29 +64,30 @@ import * as echarts from 'echarts';
 import { hotSearchApi } from '@/request/api'
 
 const state = reactive<{
+  Data: {}[],
   tableData: {}[],
   currentPage: number
   total: number
 }>({
   tableData: [],
+  Data: [],
   currentPage: 1,
   total: Number('')
 })
-let { tableData, currentPage, total } = toRefs(state)
+let { Data, tableData, currentPage, total } = toRefs(state)
 
 const handleCurrentChange = (val: number) => {
   currentPage.value = val
-  console.log(currentPage);
+  tableData.value = Data.value.slice((currentPage.value - 1) * 5, currentPage.value * 5)
 }
 const initData = () => {
-  total.value = tableData.value.length
-  console.log(total.value);
 }
 
 onMounted(() => {
   hotSearchApi().then(res => {
-    console.log(res);
-
+    Data.value = res.data
+    tableData.value = res.data.slice(0, 5)
+    total.value = res.data.length
   })
   setTimeout(() => {
     initLine()

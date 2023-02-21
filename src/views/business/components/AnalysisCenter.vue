@@ -64,7 +64,6 @@ const activeName = ref('销售额')
 const activeName1 = ref('first')
 
 const handleClick = (tab: TabsPaneContext, event: Event) => {
-  console.log(tab, event)
 }
 
 const initZhu1 = () => {
