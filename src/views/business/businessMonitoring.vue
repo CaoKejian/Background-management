@@ -43,7 +43,19 @@ import 'animate.css';
 import * as echarts from 'echarts';
 import AlluseDiv from './components/AlluseDiv.vue'
 import '@/assets/china.js'
-import { getChinaApi } from '@/request/api'
+import { geoCoordMap } from "@/assets/geoCoordMap"
+import { useChinaStore } from '@/stores/china'
+import { valueEquals } from 'element-plus';
+const useChina = useChinaStore()
+type valueObj = {
+  name: string
+  value: []
+  children: {}[]
+}
+
+interface valueRes {
+  data: valueObj
+}
 
 const state = reactive<{
   name1: string
@@ -55,24 +67,21 @@ const state = reactive<{
   name3: '券核效率',
 })
 const { name1, name2, name3 } = toRefs(state)
-onMounted(() => {
-  getChinaApi().then(res => {
-    console.log(res);
-  })
+onMounted(async () => {
+  await useChina.getList()
   setTimeout(() => {
     initChina()
   }, 0);
 })
 const initChina = () => {
-  const data = [
-    {
-      name: "内蒙古",
-      itemStyle: {
-        areaColor: "#56b1da",
-      },
-      value: [110.3467, 41.4899]
-    },
-  ];
+  const city = useChina.list.areaTree[2].children
+  const data = city.map((v) => {
+    return {
+      name: v.name,
+      value: geoCoordMap[v.name].concat(v.total.confirm),
+      children: v.children,
+    };
+  });
   const charts = echarts.init(document.querySelector('.top-bottom') as HTMLElement)
   charts.setOption({
     backgroundColor: "#fff",
@@ -183,6 +192,9 @@ const initChina = () => {
         label: {
           show: true,
           color: "#FFF",
+          formatter(value: any) {
+            return value.data.value[2]
+          }
         },
         itemStyle: {
           color: '#328fee', //标志颜色
@@ -190,6 +202,10 @@ const initChina = () => {
         data: data,
       },
     ],
+  })
+  charts.on("click", (e) => {
+    console.log(e);
+
   })
 }
 

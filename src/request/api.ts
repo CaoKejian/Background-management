@@ -18,12 +18,19 @@ interface CityRes {
   id: string
 }
 interface CityRes {
-  _id:string
+  _id: string
   username: string,
   pdSafety: string,
   phSafety: string,
   mbSafety: [],
   mailSafety: string
+}
+interface chinaRes {
+  chinaTotal: {}[],
+  chinaDayList: {},
+  areaTree: {}[],
+  lastUpdateTime: string,
+  overseaLastUpdateTime: string
 }
 
 
@@ -35,6 +42,6 @@ export const articleListApi = (): Promise<any> => request.get('/article/list')
 export const cityListApi = (): PromiseRes<any> => request.get('/city/list')
 export const SafetyApi = (): Promise<CityRes> => request.get('/safety/info')
 export const hotSearchApi = (): Promise<any> => request.get('/hotSearch/list')
-export const getChinaApi = (): Promise<any> => request.get('/china/list')
+export const getChinaApi = (): Promise<RootObject> => request.get('/china/list')
 
 
