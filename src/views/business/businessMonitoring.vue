@@ -43,13 +43,7 @@ import 'animate.css';
 import * as echarts from 'echarts';
 import AlluseDiv from './components/AlluseDiv.vue'
 import '@/assets/china.js'
-import getMapApiList from '@/request/index'
-import axios from 'axios'
-// const server = axios.create({
-//   baseURL: "https://c.m.163.com/ug/api/wuhan/app/data/list-total?t=335033451023"
-// })
-// const getMapApiList = () => server.get('').then(res => res.data)
-// console.log(getMapApiList);
+import { getChinaApi } from '@/request/api'
 
 const state = reactive<{
   name1: string
@@ -62,6 +56,9 @@ const state = reactive<{
 })
 const { name1, name2, name3 } = toRefs(state)
 onMounted(() => {
+  getChinaApi().then(res => {
+    console.log(res);
+  })
   setTimeout(() => {
     initChina()
   }, 0);

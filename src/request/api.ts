@@ -35,5 +35,6 @@ export const articleListApi = (): Promise<any> => request.get('/article/list')
 export const cityListApi = (): PromiseRes<any> => request.get('/city/list')
 export const SafetyApi = (): Promise<CityRes> => request.get('/safety/info')
 export const hotSearchApi = (): Promise<any> => request.get('/hotSearch/list')
+export const getChinaApi = (): Promise<any> => request.get('/china/list')
 
 
