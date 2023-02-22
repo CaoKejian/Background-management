@@ -48,6 +48,7 @@ interface Total {
 }
 
 interface ChinaDayList {
+  name?:string,
   date: string;
   today: Today;
   total: Total;

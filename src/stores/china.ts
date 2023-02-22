@@ -5,7 +5,10 @@ import { getChinaApi } from '@/request/api'
 export const useChinaStore = defineStore({
   id: 'china',
   state: () => ({
-    list: <RootObject>{}
+    list: <RootObject>{},
+    item: <ChinaDayList[]>[],
+    chinaAdd: <Today>{},
+    chinatotal: <Total>{},
   }),
   getters: {
 

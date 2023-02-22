@@ -28,9 +28,22 @@
       <div class="right">
         <div class="right-div">
           <AlluseDiv :name="name2" />
-        </div>
-        <div class="right-div">
-          <AlluseDiv :name="name3" />
+          <div style="color:#000" class="right-div-bottom">
+            <table class="table" cellspacing="0" border="1">
+              <thead>
+                <tr>
+                  <th>地区</th>
+                  <th>累计收入</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(item, index) in  useChina.item " :key="index">
+                  <td align="center">{{ item.name }}</td>
+                  <td align="center">{{ item.total.confirm }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
@@ -45,7 +58,7 @@ import AlluseDiv from './components/AlluseDiv.vue'
 import '@/assets/china.js'
 import { geoCoordMap } from "@/assets/geoCoordMap"
 import { useChinaStore } from '@/stores/china'
-import { valueEquals } from 'element-plus';
+
 const useChina = useChinaStore()
 type valueObj = {
   name: string
@@ -63,7 +76,7 @@ const state = reactive<{
   name3: string
 }>({
   name1: '活动实时交易情况',
-  name2: '活动情况预测',
+  name2: '活动收入监测',
   name3: '券核效率',
 })
 const { name1, name2, name3 } = toRefs(state)
@@ -74,7 +87,8 @@ onMounted(async () => {
   }, 0);
 })
 const initChina = () => {
-  const city = useChina.list.areaTree[2].children
+  const city = useChina.list.areaTree[2].children;
+  useChina.item = city[2].children;
   const data = city.map((v) => {
     return {
       name: v.name,
@@ -82,15 +96,13 @@ const initChina = () => {
       children: v.children,
     };
   });
-  const charts = echarts.init(document.querySelector('.top-bottom') as HTMLElement)
+  const charts = echarts.init(document.querySelector(".top-bottom") as HTMLElement);
   charts.setOption({
-    backgroundColor: "#fff",
     geo: {
       map: "china",
       aspectScale: 0.8,
       layoutCenter: ["50%", "50%"],
       layoutSize: "120%",
-
       itemStyle: {
         // normal: {
         areaColor: {
@@ -145,11 +157,10 @@ const initChina = () => {
     series: [
       {
         type: "map",
-        selectedMode: "multiple",
         map: "china",
         aspectScale: 0.8,
         layoutCenter: ["50%", "50%"], //地图位置
-        layoutSize: "140%",
+        layoutSize: "150%",
         zoom: 1, //当前视角的缩放比例
         // roam: true, //是否开启平游或缩放
         scaleLimit: {
@@ -163,13 +174,11 @@ const initChina = () => {
           fontSize: 12,
         },
         itemStyle: {
+          // normal: {
           areaColor: "#0c3653",
           borderColor: "#1cccff",
           borderWidth: 1.8,
-          emphasis: {
-            borderWidth: .50,
-            areaColor: "#56b1da",
-          }
+          //},
         },
         emphasis: {
           areaColor: "#56b1da",
@@ -177,37 +186,40 @@ const initChina = () => {
             show: true,
             color: "#fff",
           },
-
         },
         data: data,
       },
       {
-        type: 'scatter',
-        coordinateSystem: 'geo',
+        type: "scatter",
+        coordinateSystem: "geo",
         //   symbol: 'image://http://ssq168.shupf.cn/data/biaoji.png',
         // symbolSize: [30,120],
         // symbolOffset:[0, '-40%'] ,
-        symbol: 'pin',
+        symbol: "pin",
         symbolSize: [55, 55],
         label: {
+          // normal: {
           show: true,
           color: "#FFF",
           formatter(value: any) {
-            return value.data.value[2]
-          }
+            return value.data.value[2];
+          },
+          // },
         },
         itemStyle: {
-          color: '#328fee', //标志颜色
+          // normal: {
+          color: "#328fee", //标志颜色
+          // },
         },
         data: data,
       },
     ],
-  })
-  charts.on("click", (e) => {
-    console.log(e);
+  });
 
-  })
-}
+  charts.on("click", (e: any) => {
+    useChina.item = e.data.children;
+  });
+};
 
 </script>
 <style lang='less' scoped>
@@ -269,9 +281,49 @@ const initChina = () => {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      overflow: hidden;
 
+      &-div {
+        width: 100%;
+        overflow: hidden;
+
+        &-bottom {
+          width: 100%;
+          height: 35.3125rem;
+          overflow-y: scroll;
+          background-color: #fff;
+        }
+      }
     }
 
+  }
+}
+
+.right-div-bottom::-webkit-scrollbar {
+  width: 0 !important
+}
+
+.table {
+  width: 90%;
+  max-height: 35.3125rem;
+  margin: 20px auto;
+  border: 1px solid #d9d9d9;
+
+  tr {
+    th {
+      padding: 5px;
+      border-right: 0.5px solid #d9d9d9;
+      border-top: 0.5px solid #d9d9d9;
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 5px 10px;
+      width: 100px;
+      border-right: 0.5px solid #d9d9d9;
+      border-top: 0.5px solid #d9d9d9;
+      white-space: nowrap;
+    }
   }
 }
 </style>
