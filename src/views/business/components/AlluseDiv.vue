@@ -1,12 +1,14 @@
 <template>
   <div class="allusediv">
     <span>{{ propData.name }}</span>
+    <span>{{ propData.nameActive }}</span>
   </div>
 </template>
 <script setup lang='ts'>
 import { ref } from 'vue'
 type Props = {
   name: string
+  nameActive?: string
 }
 const propData = defineProps<Props>()
 </script>
@@ -16,11 +18,24 @@ const propData = defineProps<Props>()
   height: 3.75rem;
   background-color: #fff;
   overflow: hidden;
+  display: flex;
+  justify-content: space-between;
   border-bottom: 1px solid #f0f0f0;
 
   span {
     line-height: 3.75rem;
-    margin-left: 20px;
+    margin: 0 20px;
+  }
+
+  :nth-child(2) {
+    color: #39a5ff;
+    font-size: 14px;
+    cursor: pointer;
+
+    &:hover {
+      color: #5bb2f9;
+      transition: all .4s;
+    }
   }
 }
 </style>
