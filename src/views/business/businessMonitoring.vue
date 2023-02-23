@@ -14,15 +14,15 @@
               <span>92%</span>
             </div>
             <div class="box1">
-              <span>活动剩余时间</span>
-              <span>活动剩余时间</span>
+              <span>活动进度</span>
+              <span>活动进度</span>
             </div>
             <div class="box1">
               <span>每秒交易总额</span>
               <span>234元</span>
             </div>
           </div>
-          <div class="top-bottom">地图</div>
+          <div class="top-bottom"></div>
         </div>
       </div>
       <div class="right">
@@ -47,7 +47,28 @@
         </div>
       </div>
     </div>
-
+    <div class="bottom">
+      <div class="bottom-div">
+        <div class="bottom-div-item">
+          <AlluseDiv :name="name3" />
+          <div class="bottom-div-item-process">
+            <el-progress type="circle" :percentage="25" color="#fab120" />
+            <el-progress type="circle" :percentage="32" color="#65e0d1" />
+            <el-progress type="circle" :percentage="65" color="#3ac563" />
+          </div>
+        </div>
+        <div class="bottom-div-item">
+          <AlluseDiv :name="name4" />
+          <div class="bottom-div-panel">
+          </div>
+        </div>
+        <div class="bottom-div-item">
+          <AlluseDiv :name="name5" />
+          <div class="bottom-div-ball">
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script setup lang='ts'>
@@ -58,6 +79,7 @@ import AlluseDiv from './components/AlluseDiv.vue'
 import '@/assets/china.js'
 import { geoCoordMap } from "@/assets/geoCoordMap"
 import { useChinaStore } from '@/stores/china'
+import 'echarts-liquidfill'
 
 const useChina = useChinaStore()
 type valueObj = {
@@ -74,16 +96,22 @@ const state = reactive<{
   name1: string
   name2: string
   name3: string
+  name4: string
+  name5: string
 }>({
   name1: '活动实时交易情况',
   name2: '活动收入监测',
-  name3: '券核效率',
+  name3: '各品类占比',
+  name4: '券核效率',
+  name5: '资源剩余',
 })
-const { name1, name2, name3 } = toRefs(state)
+const { name1, name2, name3, name5, name4 } = toRefs(state)
 onMounted(async () => {
   await useChina.getList()
   setTimeout(() => {
     initChina()
+    initPanel()
+    initball()
   }, 0);
 })
 const initChina = () => {
@@ -220,12 +248,127 @@ const initChina = () => {
     useChina.item = e.data.children;
   });
 };
+const initPanel = () => {
+  const charts = echarts.init(document.querySelector('.bottom-div-panel') as HTMLElement)
+  charts.setOption({
+    backgroundColor: '#fff',
+    series: [
+      {
+        type: 'gauge',
+        radius: '90%', //显示比例
+        progress: {
+          show: true,
+          width: 18
+        },
+        axisLine: {
+          lineStyle: {
+            width: 18
+          }
+        },
+        axisTick: {
+          show: false
+        },
+        splitLine: {
+          length: 5,
+          lineStyle: {
+            width: 2,
+            color: '#999'
+          }
+        },
+        axisLabel: {
+          distance: 20,
+          color: '#999',
+          fontSize: 10
+        },
+        title: {
+          show: true,
+          offsetCenter: ['25%', '70%'],
+          textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+            fontWeight: 'bolder',
+            fontSize: 20,
+            color: "#000",
+          }
+        },
+        detail: {
+          valueAnimation: true,
+          fontSize: 20,
+          offsetCenter: ['-10%', '70%'],
+          formatter: `{value}`,
+          textStyle: { color: '#000', fontSize: 20 },
+        },
+        data: [
+          {
+            value: 70,
+            name: "优"
+          }
+        ]
+      }
+    ]
+  })
+}
+const initball = () => {
+  const charts = echarts.init(document.querySelector('.bottom-div-ball') as HTMLElement)
+  charts.setOption({
+    backgroundColor: '#fff', //背景色
+    series: [
+      {
+        type: 'liquidFill', //水位图
+        radius: '90%', //显示比例
+        center: ['50%', '50%'], //中心点
+        amplitude: 10, //水波振幅
+        data: [0.5, .5, .5], // data个数代表波浪数
+        color: [
+          {
+            type: 'linear',
+            x: 0,
+            y: 0,
+            x2: 0,
+            y2: 1,
+            colorStops: [
+              {
+                offset: 0,
+                color: '#6193fa',
+              },
+              {
+                offset: 1,
+                color: '#2ca3e2',
+              },
+            ],
+            globalCoord: false,
+          },
+        ], //波浪颜色
+        backgroundStyle: {
+          borderWidth: 5, //外边框
+          borderColor: '#fff', //边框颜色
+          color: '#fff', //边框内部填充部分颜色
+        },
+        label: {
+          //标签设置
+          position: ['50%', '75%'],
+          formatter: '50%', //显示文本,
+          textStyle: {
+            fontSize: '32px', //文本字号,
+            color: '#fff',
+          },
+        },
+        outline: {
+          show: true,
+          borderDistance: 0,
+          itemStyle: {
+            borderWidth: 2,
+            borderColor: '#112165',
+          },
+        },
+      },
+    ],
+  })
+}
 
 </script>
 <style lang='less' scoped>
 .wrapper {
   width: 100%;
-  height: 120vh;
+  height: auto;
   background-color: #f0f2f5;
   overflow: hidden;
 
@@ -296,6 +439,42 @@ const initChina = () => {
       }
     }
 
+  }
+
+  .bottom {
+    width: 95%;
+    margin: 1.25rem auto;
+
+    // height: 16.3125rem;
+    &-div {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+
+
+
+      &-item {
+        width: 25%;
+
+        &:nth-child(1) {
+          width: 45%;
+        }
+
+        &-process {
+          background-color: #fff;
+          height: 12.5rem;
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+        }
+
+        .bottom-div-panel,
+        .bottom-div-ball {
+          width: 100%;
+          height: 12.5rem;
+        }
+      }
+    }
   }
 }
 
