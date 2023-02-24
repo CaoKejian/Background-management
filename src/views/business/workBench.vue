@@ -20,7 +20,7 @@
           <AlluseDiv :name="name3" />
           <div class="content">
             <ul>
-              <li v-for="(item, index) in   6" :key="index">
+              <li v-for="(item, index) in  6" :key="index">
                 Colin 在 微信设计天团 新建项目 2/23迭代 几秒前
               </li>
             </ul>
@@ -31,8 +31,8 @@
         <div class="right-box1">
           <AlluseDiv :name="name2" />
           <div class="traverse">
-            <div class="div" v-for="(item, index) in   6" :key="index">
-              <div>{{ item }}</div>
+            <div class="div" v-for="(item, index) in   itemGo" :key="index">
+              <div><a :href=item.from>{{ item.to }}</a></div>
             </div>
           </div>
         </div>
@@ -97,6 +97,11 @@ const state = reactive<{
     user: string
     content: string
   }[]
+  itemGo: {
+    to: string,
+    id: number,
+    from: string
+  }[]
 }>({
   name1: '进行中的项目',
   name2: '快速开始 / 便捷导航',
@@ -109,9 +114,17 @@ const state = reactive<{
     name: "",
     user: "",
     content: ""
-  }]
+  }],
+  itemGo: [
+    { to: '业务分析', id: 1, from: '/business/businessAnalysis' },
+    { to: '个人中心', id: 2, from: '/info/infoCenter' },
+    { to: '添加商品', id: 3, from: '' },
+    { to: '业务分析', id: 4, from: '' },
+    { to: '权限分配', id: 5, from: '' },
+    { to: '客户', id: 6, from: '' },
+  ]
 })
-const { name1, name2, name3, name4, name5, nameActive1, itemIng } = toRefs(state)
+const { name1, name2, name3, name4, name5, nameActive1, itemIng, itemGo } = toRefs(state)
 
 onMounted(() => {
   initData()
@@ -290,6 +303,12 @@ const initLeida = () => {
           .div {
             width: 25%;
             height: 50%;
+            cursor: pointer;
+
+            &:hover {
+              color: #419eff;
+              transition: all .3s;
+            }
           }
         }
       }
