@@ -20,8 +20,11 @@
           <AlluseDiv :name="name3" />
           <div class="content">
             <ul>
-              <li v-for="(item, index) in  6" :key="index">
-                Colin 在 微信设计天团 新建项目 2/23迭代 几秒前
+              <li v-for="(item, index) in  dynamic" :key="index">
+                <svg-icon class="svg" :name=item.svg />
+                <span>{{ item.user }} 在 </span>
+                <span>{{ item.team }} </span> 新建项目
+                <span>{{ item.items }}</span>
               </li>
             </ul>
           </div>
@@ -102,6 +105,13 @@ const state = reactive<{
     id: number,
     from: string
   }[]
+  dynamic: {
+    id: number
+    svg: string
+    user: string
+    team: string
+    items: string
+  }[]
 }>({
   name1: '进行中的项目',
   name2: '快速开始 / 便捷导航',
@@ -122,9 +132,53 @@ const state = reactive<{
     { to: '业务分析', id: 4, from: '' },
     { to: '权限分配', id: 5, from: '' },
     { to: '客户', id: 6, from: '' },
+  ],
+  dynamic: [
+    {
+      id: 1,
+      svg: 'boy',
+      user: 'Colin',
+      team: '企鹅推销团队',
+      items: '2/24 迭代'
+    },
+    {
+      id: 2,
+      svg: 'girl',
+      user: 'Jerry',
+      team: '企鹅推销团队',
+      items: '2/21 迭代'
+    },
+    {
+      id: 3,
+      svg: 'boy',
+      user: 'Mike',
+      team: '企鹅推销团队',
+      items: '2/11 迭代'
+    },
+    {
+      id: 4,
+      svg: 'girl',
+      user: 'Meuo',
+      team: '企鹅推销团队',
+      items: '2/8 迭代'
+    },
+    {
+      id: 5,
+      svg: 'boy',
+      user: 'Tom',
+      team: '企鹅推销团队',
+      items: '2/6 迭代'
+    },
+    {
+      id: 6,
+      svg: 'girl',
+      user: 'Cerry',
+      team: '企鹅推销团队',
+      items: '2/4 迭代'
+    }
   ]
 })
-const { name1, name2, name3, name4, name5, nameActive1, itemIng, itemGo } = toRefs(state)
+const { name1, name2, name3, name4, name5, nameActive1, itemIng, itemGo, dynamic } = toRefs(state)
 
 onMounted(() => {
   initData()
@@ -273,6 +327,21 @@ const initLeida = () => {
               height: 80px;
               border-bottom: 1px solid #efefef;
 
+              .svg {
+                font-size: 34px;
+                margin-right: 16px;
+              }
+
+              span {
+
+                &:nth-child(3),
+                &:nth-child(4) {
+                  color: #6290ff;
+                  cursor: pointer;
+                }
+              }
+
+
               &:nth-last-child(1) {
                 border: none;
               }
@@ -304,6 +373,8 @@ const initLeida = () => {
             width: 25%;
             height: 50%;
             cursor: pointer;
+            font-size: 14px;
+            margin-bottom: 5px;
 
             &:hover {
               color: #419eff;
