@@ -1,16 +1,21 @@
 <template>
   <div class="allusediv">
     <span>{{ propData.name }}</span>
-    <span>{{ propData.nameActive }}</span>
+    <span @click="toPage('/')">{{ propData.nameActive }}</span>
   </div>
 </template>
 <script setup lang='ts'>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router';
+const router = useRouter();
 type Props = {
   name: string
   nameActive?: string
 }
 const propData = defineProps<Props>()
+const toPage = (url: string) => {
+  router.push(url)
+}
 </script>
 <style lang='less' scoped>
 .allusediv {

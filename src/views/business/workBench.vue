@@ -6,8 +6,13 @@
         <div class="left-box1">
           <AlluseDiv :name="name1" :name-active="nameActive1" />
           <div class="traverse">
-            <div class="div" v-for="(item, index) in 6" :key="index">
-              <div>{{ item }}</div>
+            <div class="div" v-for="(item, index) in itemIng" :key="index">
+              <div class="div-item1">
+                <svg-icon class="svg" :name=item.icon />
+                <div>{{ item.name }}</div>
+              </div>
+              <div class="div-item2">{{ item.content }}</div>
+              <div class="div-item3">{{ item.user }}</div>
             </div>
           </div>
         </div>
@@ -15,7 +20,7 @@
           <AlluseDiv :name="name3" />
           <div class="content">
             <ul>
-              <li v-for="(item, index) in 6" :key="index">
+              <li v-for="(item, index) in   6" :key="index">
                 Colin 在 微信设计天团 新建项目 2/23迭代 几秒前
               </li>
             </ul>
@@ -26,7 +31,7 @@
         <div class="right-box1">
           <AlluseDiv :name="name2" />
           <div class="traverse">
-            <div class="div" v-for="(item, index) in 6" :key="index">
+            <div class="div" v-for="(item, index) in   6" :key="index">
               <div>{{ item }}</div>
             </div>
           </div>
@@ -75,7 +80,9 @@
 import { ref, reactive, toRefs, onMounted } from 'vue'
 import worktable from './components/worktable.vue'
 import AlluseDiv from './components/AlluseDiv.vue';
+import { getItemUsingApi } from '@/request/api';
 import * as echarts from 'echarts'
+
 
 const state = reactive<{
   name1: string
@@ -84,20 +91,39 @@ const state = reactive<{
   name4: string
   name5: string
   nameActive1: string
+  itemIng: {
+    icon: string
+    name: string
+    user: string
+    content: string
+  }[]
 }>({
   name1: '进行中的项目',
   name2: '快速开始 / 便捷导航',
   name3: '动态',
   name4: '指数',
   name5: '团队',
-  nameActive1: "全部项目"
+  nameActive1: "全部项目",
+  itemIng: [{
+    icon: "",
+    name: "",
+    user: "",
+    content: ""
+  }]
 })
-const { name1, name2, name3, name4, name5, nameActive1 } = toRefs(state)
+const { name1, name2, name3, name4, name5, nameActive1, itemIng } = toRefs(state)
+
 onMounted(() => {
+  initData()
   setTimeout(() => {
     initLeida()
   }, 0)
 })
+const initData = () => {
+  getItemUsingApi().then(res => {
+    itemIng.value = res.data
+  })
+}
 const initLeida = () => {
   const charts = echarts.init(document.querySelector('.echart-leida') as HTMLElement)
   charts.setOption({
@@ -174,15 +200,45 @@ const initLeida = () => {
 
         .traverse {
           width: 100%;
-          // height: 18.75rem;
-          height: 100%;
+          height: 80%;
           display: flex;
           justify-content: space-between;
           flex-wrap: wrap;
+          overflow: hidden;
 
           .div {
             width: 33.33%;
             height: 50%;
+            box-sizing: border-box;
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            &-item1 {
+              display: flex;
+              align-items: center;
+
+              div {
+                margin-left: 10px;
+                font-weight: bold;
+              }
+
+              .svg {
+                font-size: 24px;
+                border-radius: 50%
+              }
+            }
+
+            &-item2 {
+              font-size: 14px;
+              color: #8c8c8c;
+            }
+
+            &-item3 {
+              font-size: 14px;
+              color: #616060;
+            }
           }
         }
       }

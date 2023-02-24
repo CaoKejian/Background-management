@@ -6,7 +6,7 @@ interface AdminLoginData {
 }
 type PromiseRes<T> = Promise<ManageResult<T>>
 interface ManageResult<T> {
-  code: number
+  code?: number
   data: T
   message?: string
 }
@@ -25,14 +25,9 @@ interface CityRes {
   mbSafety: [],
   mailSafety: string
 }
-interface chinaRes {
-  chinaTotal: {}[],
-  chinaDayList: {},
-  areaTree: {}[],
-  lastUpdateTime: string,
-  overseaLastUpdateTime: string
+interface itemUsing {
+  data: []
 }
-
 
 
 export const adminLoginApi = (data: AdminLoginData): PromiseRes<AdminLoginRes> => request.get('/user/list', { params: data })
@@ -43,5 +38,6 @@ export const cityListApi = (): PromiseRes<any> => request.get('/city/list')
 export const SafetyApi = (): Promise<CityRes> => request.get('/safety/info')
 export const hotSearchApi = (): Promise<any> => request.get('/hotSearch/list')
 export const getChinaApi = (): Promise<RootObject> => request.get('/china/list')
+export const getItemUsingApi = (): Promise<RootObjectItemUsing> => request.get('/itemUsing')
 
 
