@@ -90,6 +90,10 @@ onMounted(() => {
     total.value = res.data.length
   })
   setTimeout(() => {
+    const myChart1 = echarts.init(document.querySelector('.bottom') as HTMLElement)
+    const myChart2 = echarts.init(document.querySelector('.bottom1') as HTMLElement)
+    myChart1.resize()
+    myChart2.resize()
     initLine()
     initLine1()
     initData()

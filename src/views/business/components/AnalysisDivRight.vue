@@ -67,6 +67,8 @@ const click1 = (data: number) => {
   }
 }
 onMounted(() => {
+  const myChart1 = echarts.init(document.querySelector('.pie') as HTMLElement)
+    myChart1.resize()
   setTimeout(() => {
     initPie()
   }, 0)

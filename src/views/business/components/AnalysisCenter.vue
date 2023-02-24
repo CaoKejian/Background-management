@@ -41,6 +41,10 @@ import * as echarts from 'echarts';
 import type { TabsPaneContext } from 'element-plus'
 onMounted(() => {
   setTimeout(() => {
+    const myChart1 = echarts.init(document.querySelector('.zhu') as HTMLElement)
+    const myChart2 = echarts.init(document.querySelector('.zhu2') as HTMLElement)
+    myChart1.resize()
+    myChart2.resize()
     initZhu1()
     initZhu2()
   }, 0)

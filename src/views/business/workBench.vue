@@ -1,5 +1,5 @@
-<template>
-  <div class="wrapper">
+<template #default="{route,Component}">
+  <div class="wrapper" :class="`animate__animated ${$route.meta.transition}`">
     <worktable />
     <div class="container">
       <div class="left">
@@ -80,6 +80,7 @@
   </div>
 </template>
 <script setup lang='ts'>
+import 'animate.css';
 import { ref, reactive, toRefs, onMounted } from 'vue'
 import worktable from './components/worktable.vue'
 import AlluseDiv from './components/AlluseDiv.vue';
@@ -181,6 +182,10 @@ const state = reactive<{
 const { name1, name2, name3, name4, name5, nameActive1, itemIng, itemGo, dynamic } = toRefs(state)
 
 onMounted(() => {
+  window.addEventListener('resize', () => {
+    const myChart = echarts.init(document.querySelector('.echart-leida') as HTMLElement)
+    myChart.resize()
+  })
   initData()
   setTimeout(() => {
     initLeida()

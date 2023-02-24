@@ -108,6 +108,14 @@ const state = reactive<{
 const { name1, name2, name3, name5, name4 } = toRefs(state)
 onMounted(async () => {
   await useChina.getList()
+  window.addEventListener('resize', () => {
+    const myChart1 = echarts.init(document.querySelector('.top-bottom') as HTMLElement)
+    const myChart2 = echarts.init(document.querySelector('.bottom-div-panel') as HTMLElement)
+    const myChart3 = echarts.init(document.querySelector('.bottom-div-ball') as HTMLElement)
+    myChart1.resize()
+    myChart2.resize()
+    myChart3.resize()
+  })
   setTimeout(() => {
     initChina()
     initPanel()

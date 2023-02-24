@@ -99,6 +99,10 @@
 import { ref, onMounted } from 'vue'
 import * as echarts from 'echarts';
 onMounted(() => {
+  const myChart1 = echarts.init(document.querySelector('.box-zhu') as HTMLElement)
+    const myChart2 = echarts.init(document.querySelector('.box-line') as HTMLElement)
+    myChart1.resize()
+    myChart2.resize()
   setTimeout(() => {
     initLine()
     initZhu()
