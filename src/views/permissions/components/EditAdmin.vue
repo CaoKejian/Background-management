@@ -18,7 +18,7 @@
       </el-form-item>
       <el-form-item label="是否启用：">
         <el-radio v-model="newForm.status" :label="1" size="large">是</el-radio>
-        <el-radio v-mode="newForm.status" :label="0" size="large">否</el-radio>
+        <el-radio v-model="newForm.status" :label="0" size="large">否</el-radio>
       </el-form-item>
     </el-form>
     <template #footer>
@@ -32,17 +32,17 @@
   </el-dialog>
 </template>
 <script setup lang='ts'>
-import { emitChangeFn } from 'element-plus';
 import { ref, reactive, toRefs, watch } from 'vue'
+import { updateAdmin } from '@/request/api'
 type Props = {
   visible: boolean,
-  form:AdminObjItf
+  form: AdminObjItf
 }
 
 const propData = defineProps<Props>()
 const state = reactive<{
-  formLabelWidth:string
-  newForm:AdminObjItf
+  formLabelWidth: string
+  newForm: AdminObjItf
 }>({
   formLabelWidth: '120px',
   newForm: {}
@@ -53,15 +53,23 @@ watch(() => propData.form, () => {
   newForm.value = { ...propData.form }
 })
 const emit = defineEmits<{
-  (event: 'close'): void
+  (event: 'close', r?: 'reload'): void
 }>()
 // 关闭
-const close = () => {
-  emit('close')
+const close = (r?: 'reload') => {
+  emit("close", r)
 }
 // 完成
 const modify = () => {
-
+  if (newForm.value.id) {
+    updateAdmin(
+      newForm.value.id,
+      newForm.value
+    ).then(res => {
+      console.log(res);
+      close('reload')
+    })
+  }
 }
 </script>
 <style lang='less' scoped></style>

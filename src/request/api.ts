@@ -4,7 +4,7 @@ interface AdminLoginData {
   username: string
   pwd: string
 }
-type PromiseRes<T> = Promise<ManageResult<T>>
+type PromiseRes<T = {}> = Promise<ManageResult<T>>
 interface ManageResult<T> {
   code?: number
   data: T
@@ -44,5 +44,6 @@ export const hotSearchApi = (): Promise<any> => request.get('/hotSearch/list')
 export const getChinaApi = (): Promise<RootObject> => request.get('/china/list')
 export const getItemUsingApi = (): Promise<RootObjectItemUsing> => request.get('/itemUsing')
 export const getAdminInfoApi = (data: AdminListParams): PromiseRes<{ list: {}[] }> => request.get('/admin/user', { params: data })
+export const updateAdmin = (id: number,data:AdminObjItf): PromiseRes => request.post('/admin/user/'+ id,data)
 
 

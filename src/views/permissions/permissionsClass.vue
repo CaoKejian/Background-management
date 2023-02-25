@@ -63,13 +63,15 @@ const state = reactive<{
   rowData: {}
 })
 onMounted(() => {
-  getAdminInfoApi({ pageNum: 10, pageSize: 1 }).then(res => {
-    tableData.value = res.data.list
-  })
+  getData()
 })
 
 const { name1, name2, tableData, visible, rowData } = toRefs(state)
-
+const getData = () => {
+  getAdminInfoApi({ pageNum: 10, pageSize: 1 }).then(res => {
+    tableData.value = res.data.list
+  })
+}
 const allocRole = (data: {}[]) => {
 
 }
@@ -78,8 +80,11 @@ const editAdmin = (row: AdminObjItf) => {
   rowData.value = row
 }
 // 关闭弹框
-const closeDialog = () => {
+const closeDialog = (r?:'reload') => {
   visible.value = false
+  if(r === 'reload'){
+    getData()
+  }
 }
 // 格式化时间
 const formateDate = (time: string | undefined) => {
