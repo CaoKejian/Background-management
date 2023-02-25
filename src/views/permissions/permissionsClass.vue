@@ -36,6 +36,8 @@
           </template>
         </el-table-column>
       </el-table>
+      <el-pagination @current-change="handleCurrentChange" :page-size="10" :pager-count="7" layout="prev, pager, next"
+        v-model:currentPage="state.pageSize" :total="state.total" />
     </div>
     <EditAdmin :visible="visible" :form="rowData" @close="closeDialog" />
   </div>
@@ -55,22 +57,35 @@ const state = reactive<{
   tableData: {}[]
   visible: boolean
   rowData: {}
+  total: number
+  pageSize: number
+  Data: {}[]
 }>({
   name1: "当前权限",
   name2: "更改权限",
   tableData: [],
   visible: false,
-  rowData: {}
+  rowData: {},
+  total: Number(''),
+  pageSize: 1,
+  Data: []
 })
 onMounted(() => {
   getData()
 })
 
-const { name1, name2, tableData, visible, rowData } = toRefs(state)
+const { name1, name2, tableData, visible, rowData, total, pageSize, Data } = toRefs(state)
 const getData = () => {
-  getAdminInfoApi({ pageNum: 10, pageSize: 1 }).then(res => {
-    tableData.value = res.data.list
+  getAdminInfoApi({ pageNum: 10, pageSize: pageSize.value }).then(res => {
+    total.value = res.data.list.length
+    Data.value = res.data.list
+    tableData.value = res.data.list.slice(0, 10)
   })
+}
+//  分页功能
+const handleCurrentChange = (val: number) => {
+  pageSize.value = val
+  tableData.value = Data.value.slice((pageSize.value - 1) * 10, pageSize.value * 10)
 }
 const allocRole = (data: {}[]) => {
 
@@ -80,9 +95,9 @@ const editAdmin = (row: AdminObjItf) => {
   rowData.value = row
 }
 // 关闭弹框
-const closeDialog = (r?:'reload') => {
+const closeDialog = (r?: 'reload') => {
   visible.value = false
-  if(r === 'reload'){
+  if (r === 'reload') {
     getData()
   }
 }
@@ -108,13 +123,13 @@ const addZear = (num: number) => {
 <style lang='less' scoped>
 .wrapper {
   width: 100%;
-  height: calc(100vh - 3rem);
+  min-height: 100%;
   background-color: #f0f2f5;
   overflow: hidden;
 
   .header {
     width: 100%;
-    height: 4%;
+    height: 3.75rem;
     background-color: #fff;
 
     :deep(.el-breadcrumb) {
@@ -136,9 +151,17 @@ const addZear = (num: number) => {
   }
 
   .bottom {
+    width: 100%;
+    height: auto;
+    background-color: red;
     border-radius: 3px;
     width: 96%;
     margin: 1.25rem auto;
   }
+}
+
+:deep(.el-pagination) {
+  float: right;
+  margin-bottom: 1.25rem;
 }
 </style>
