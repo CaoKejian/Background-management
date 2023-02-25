@@ -8,15 +8,15 @@
     </div>
     <div class="menu" id="menu">
       <el-menu active-text-color="#1890ff" background-color="#ffffff" class="el-menu-vertical-demo"
-        :default-openeds="openeds" default-active="/business/businessAnalysis" text-color="#000" @open="handleOpen"
-        @close="handleClose" :unique-opened="true" :router="true">
+        :default-openeds="openeds" :default-active="activeIndex" text-color="#000" @open="handleOpen" @close="handleClose"
+        :unique-opened="true" router>
         <el-sub-menu :index="menus.id + ''" v-for="menus in  newMenus" :key="menus.id">
           <template #title>
             <i :class='menus.icon' style="margin-right: 10px;" id="menu-icon"></i>
             <span>{{ menus.title }}</span>
           </template>
           <template v-for="submenu in   menus.children" :key="submenu.id">
-            <el-menu-item :index="'/' + menus.name + '/' + submenu.name">{{
+            <el-menu-item :index="'/' + menus.name + '/' + submenu.name" @click="clickMenuItem">{{
               submenu.title
             }}</el-menu-item>
           </template>
@@ -36,10 +36,14 @@
   </div>
 </template>
 <script setup lang='ts'>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useInfoStore } from '@/stores/counter'
+import { useRouter } from 'vue-router'
+let router = useRouter()
+
 const useInfo = useInfoStore()
 const openeds = ref(['1'])
+let activeIndex = ref('/business/businessAnalysis')
 
 interface MenuObj {
   parentId: number
@@ -53,6 +57,9 @@ interface MenuObj {
 type NewMenus = {
   [key: number]: MenuObj
 }
+onMounted(() => {
+  activeIndex.value = router.currentRoute.value.fullPath
+})
 
 const newMenus: NewMenus = useInfo.getNewMenus
 const handleOpen = (key: string, keyPath: string[]) => {
@@ -60,7 +67,10 @@ const handleOpen = (key: string, keyPath: string[]) => {
 const handleClose = (key: string, keyPath: string[]) => {
 }
 const clickMenu = () => {
-
+}
+const clickMenuItem = () => {
+  console.log(123, router.currentRoute.value.fullPath);
+  activeIndex.value = router.currentRoute.value.fullPath
 }
 </script>
 <style lang='less' scoped>
