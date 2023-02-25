@@ -29,6 +29,10 @@ interface itemUsing {
   data: []
 }
 
+interface AdminListParams {
+  pageNum: number
+  pageSize: number
+}
 
 export const adminLoginApi = (data: AdminLoginData): PromiseRes<AdminLoginRes> => request.get('/user/list', { params: data })
 
@@ -39,5 +43,6 @@ export const SafetyApi = (): Promise<CityRes> => request.get('/safety/info')
 export const hotSearchApi = (): Promise<any> => request.get('/hotSearch/list')
 export const getChinaApi = (): Promise<RootObject> => request.get('/china/list')
 export const getItemUsingApi = (): Promise<RootObjectItemUsing> => request.get('/itemUsing')
+export const getAdminInfoApi = (data: AdminListParams): PromiseRes<{ list: {}[] }> => request.get('/admin/user', { params: data })
 
 

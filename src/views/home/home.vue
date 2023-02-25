@@ -69,7 +69,6 @@ const handleClose = (key: string, keyPath: string[]) => {
 const clickMenu = () => {
 }
 const clickMenuItem = () => {
-  console.log(123, router.currentRoute.value.fullPath);
   activeIndex.value = router.currentRoute.value.fullPath
 }
 </script>
