@@ -4,6 +4,8 @@ import pinia from '../stores/store'
 import loadingBar from '../components/loadingBar.vue'
 import { useInfoStore } from '../stores/counter'
 const useStore = useInfoStore(pinia);
+import { adminInfoApi } from '../request/api'
+
 declare module 'vue-router' {
   interface RouteMeta {
     title: string,
@@ -27,7 +29,8 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: () => import('../views/home/home.vue'),
-      redirect: '/business/businessAnalysis',
+      // redirect: '/business/businessAnalysis',
+      redirect: '/login',
       children: [
         {
           path: 'index',
@@ -89,10 +92,13 @@ const setNewArr = () => {
 const Vnode = createVNode(loadingBar)
 render(Vnode, document.body)
 router.beforeEach((to, from, next) => {
+
   if (useStore.menu.length === 1) {
-    useStore.getAdminInfo().then(() => {
-      setNewArr()
-      next(to)
+    adminInfoApi().then(res => {
+      useStore.getAdminInfo().then(() => {
+        setNewArr()
+        next(to)
+      })
     })
   } else if (useStore.menu.length !== 1 && from.path === '/login' && to.path === '/index') {
     setNewArr()

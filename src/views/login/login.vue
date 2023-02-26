@@ -71,14 +71,9 @@ const submitForm = () => {
 
   ruleFormRef.value.validate().then(() => {
     adminLoginApi(ruleForm.value).then(res => {
-
       if (res.code === 200) {
         isshow.value = 2
-        adminInfoApi().then((res: AdminInfo) => {
-          if (res.code === 200) {
-            infoStore.menu = res.data[0].menu
-          }
-        })
+        infoStore.getAdminInfo().then(() => { })
         setTimeout(() => {
           router.push('/business/businessAnalysis')
         }, 800)

@@ -61,6 +61,7 @@ export const useInfoStore = defineStore('info', {
         adminInfoApi().then(res => {
           if (res.code === 200) {
             this.menu = res.data[0].menu
+            localStorage.setItem('pinia-info', JSON.stringify(res.data[0]))
             resolve(res.data)
           } else {
             reject(res)
