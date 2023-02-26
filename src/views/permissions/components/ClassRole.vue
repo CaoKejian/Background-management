@@ -2,7 +2,7 @@
   <el-dialog v-model="PropData.visible" title="分配角色" :before-close="close">
     <el-form :model="PropData.form">
       <el-form-item>
-        <el-select multiple v-model="roles" placeholder="Please select a zone">
+        <el-select multiple v-model="form.userRoles" placeholder="Please select a zone">
           <el-option v-for="role in form.roleLists" :label="role.name" :value="role.id" />
         </el-select>
       </el-form-item>
@@ -28,7 +28,7 @@ type roleRes = {
 const PropData = defineProps<roleRes>()
 const roles = ref<number[]>([])
 watch(() => PropData.form.userRoles, () => {
-  roles.value = PropData.form.userRoles?.map(item => item.id)
+  roles.value = PropData.form.userRoles.map(item => item.id)
 })
 const emit = defineEmits<{
   (event: 'close'): void

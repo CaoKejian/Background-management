@@ -97,6 +97,7 @@ interface RootObject {
 interface RoleObjItf {
   id: number
   name: string
+  data:{}[]
 }
 
 interface RoleListItf {

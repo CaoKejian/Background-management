@@ -47,12 +47,11 @@
 import { ref, reactive, toRefs, onMounted } from 'vue'
 import AlluseDiv from '../business/components/AlluseDiv.vue';
 import ClassNow from './components/ClassNow.vue'
-import { getRoleListAll, getAdminRole } from '@/request/api'
+import { getRoleListAll, getAdminRole, getRoleList } from '@/request/api'
 import EditAdmin from './components/EditAdmin.vue';
 import ClassRole from './components/ClassRole.vue';
 import 'animate.css';
 import { ElMessage } from 'element-plus'
-import { type MessageTypedFn } from 'element-plus'
 
 const state = reactive<{
   name1: string
@@ -83,17 +82,27 @@ const state = reactive<{
 })
 onMounted(() => {
   getRoleData()
+  RoleList()
 })
 
 const { Rolevisible, RoleData, name1, name2, tableData, visible, rowData, total, pageSize, Data, isshow, isShowIcon } = toRefs(state)
 
 const getRoleData = () => {
   getRoleListAll().then(res => {
-    RoleData.value.roleLists = res.data
-    tableData.value = res.data
+    console.log(res);
+
+    // RoleData.value.roleLists = res.data
     total.value = res.data.length
     Data.value = res.data
     tableData.value = res.data.slice(0, 10)
+  })
+}
+// 获取三种角色
+const RoleList = () => {
+  getRoleList().then(res => {
+    console.log(res);
+    RoleData.value.roleLists = res.data
+    console.log(RoleData.value.roleLists);
   })
 }
 const open = (status: number) => {
@@ -123,7 +132,8 @@ const handleCurrentChange = (val: number) => {
 const allocRole = (id: number) => {
   getAdminRole(id).then(res => {
     Rolevisible.value = true
-    RoleData.value.userRoles = res.data
+    RoleData.value.userRoles = res.data[0].data
+    console.log(RoleData.value.userRoles);
   })
 }
 // 编辑

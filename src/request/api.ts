@@ -48,4 +48,5 @@ export const updateAdmin = (id: number, data: AdminObjItf): PromiseRes => reques
 
 export const getRoleListAll = (): PromiseRes<[RoleObjItf]> => request.get('/admin/role')
 
+export const getRoleList = (): PromiseRes<[RoleObjItf]> => request.get('/role/list')
 export const getAdminRole = (id:number):PromiseRes<RoleObjItf[]> => request.get('/admin/role/' + id)
