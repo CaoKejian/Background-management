@@ -6,7 +6,6 @@
             class="is-loading" v-show="propData.isShowIcon">
             <Loading />
           </el-icon></span></div>
-
     </div>
 
   </div>
@@ -15,6 +14,8 @@
 import { ref, reactive, toRefs } from 'vue'
 import AlluseDiv from '@/views/business/components/AlluseDiv.vue';
 import { debounce, throttle } from "@/utils/index";
+import { ElMessage } from 'element-plus'
+
 type Props = {
   isshow: number,
   isShowIcon: boolean
@@ -37,10 +38,18 @@ const changeRoot = () => {
   if (root.value == '超级用户') {
     debounce(() => {
       root.value = '商品管理员'
+      ElMessage({
+        message: '已切换至商品管理员',
+        type: 'success',
+      })
     }, 1000)();
   } else {
     throttle(() => {
       root.value = '超级用户'
+      ElMessage({
+        message: '已切换至超级用户',
+        type: 'success',
+      })
     }, 1000)();
   }
 }

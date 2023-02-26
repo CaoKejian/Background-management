@@ -2,7 +2,7 @@
   <el-dialog v-model="propData.visible" title="Shipping address" :before-close="close">
     <el-form :model="newForm" :label-width="formLabelWidth">
       <el-form-item label="账号：">
-        <el-input v-model="newForm.userName" autocomplete="off" />
+        <el-input v-model="newForm.username" autocomplete="off" />
       </el-form-item>
       <el-form-item label="姓名：">
         <el-input v-model="newForm.nickName" autocomplete="off" />
@@ -30,7 +30,6 @@
       </span>
     </template>
   </el-dialog>
- 
 </template>
 <script setup lang='ts'>
 import { ref, reactive, toRefs, watch } from 'vue'
@@ -54,9 +53,9 @@ watch(() => propData.form, () => {
   newForm.value = { ...propData.form }
 })
 const emit = defineEmits<{
-  (event: 'close', r?: 'reload'): void
+  (event: "close", r?: "reload"): void
 }>()
-// 关闭
+
 const close = (r?: 'reload') => {
   emit("close", r)
 }
@@ -67,7 +66,6 @@ const modify = () => {
       newForm.value.id,
       newForm.value
     ).then(res => {
-      console.log(res);
       close('reload')
     })
   }

@@ -48,7 +48,7 @@ interface Total {
 }
 
 interface ChinaDayList {
-  name?:string,
+  name?: string,
   date: string;
   today: Today;
   total: Total;
@@ -92,4 +92,15 @@ interface RootObject {
   lastUpdateTime: string;
   overseaLastUpdateTime: string;
   areaTree: AreaTree[];
+}
+
+interface RoleObjItf {
+  id: number
+  name: string
+}
+
+interface RoleListItf {
+  [x: string]: any
+  description?: string
+  name?: string
 }

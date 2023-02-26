@@ -15,8 +15,6 @@ type Options = {
 }
 const __piniaKey__: string = 'pinia1'
 const setStorage = (key: string, value: any) => {
-  console.log('经过了');
-
   localStorage.setItem(key, JSON.stringify(value))
 }
 const getStorage = (key: string) => {

@@ -43,7 +43,9 @@ export const SafetyApi = (): Promise<CityRes> => request.get('/safety/info')
 export const hotSearchApi = (): Promise<any> => request.get('/hotSearch/list')
 export const getChinaApi = (): Promise<RootObject> => request.get('/china/list')
 export const getItemUsingApi = (): Promise<RootObjectItemUsing> => request.get('/itemUsing')
-export const getAdminInfoApi = (data: AdminListParams): PromiseRes<{ list: {}[] }> => request.get('/admin/user', { params: data })
-export const updateAdmin = (id: number,data:AdminObjItf): PromiseRes => request.post('/admin/user/'+ id,data)
 
+export const updateAdmin = (id: number, data: AdminObjItf): PromiseRes => request.post('/admin/role/' + id, data)
 
+export const getRoleListAll = (): PromiseRes<[RoleObjItf]> => request.get('/admin/role')
+
+export const getAdminRole = (id:number):PromiseRes<RoleObjItf[]> => request.get('/admin/role/' + id)

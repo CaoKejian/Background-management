@@ -6,12 +6,12 @@
         <el-breadcrumb-item><a href="/permissions/permissionsClass">权限分配</a></el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    <ClassNow @change="change" @rotate="rotate" :isshow="isshow" :isShowIcon="isShowIcon" />
+    <ClassNow @change="change" :isshow="isshow" :isShowIcon="isShowIcon" />
     <div class="bottom">
       <AlluseDiv :name="name2" />
       <el-table :data="tableData" style="width: 100%">
         <el-table-column prop="id" label="编号" />
-        <el-table-column prop="userName" label="账号" />
+        <el-table-column prop="username" label="账号" />
         <el-table-column prop="nickName" label="姓名" />
         <el-table-column prop="email" label="邮箱" />
         <el-table-column label="添加时间">
@@ -26,12 +26,12 @@
         </el-table-column>
         <el-table-column prop="status" label="是否启用">
           <template #default='scope'>
-            <el-switch v-model="scope.row.status" :active-value="1" :inactive-value="0" />
+            <el-switch v-model="scope.row.status" :active-value="1" :inactive-value="0" @click="open(scope.row.status)" />
           </template>
         </el-table-column>
         <el-table-column label="操作">
           <template #default="{ row }">
-            <!-- <el-button link type="primary" @click="allocRole(row.data)">分配角色</el-button> -->
+            <el-button link type="primary" @click="allocRole(row.id)">分配角色</el-button>
             <el-button link type="primary" @click="editAdmin(row)">编辑</el-button>
           </template>
         </el-table-column>
@@ -40,21 +40,27 @@
         v-model:currentPage="state.pageSize" :total="state.total" />
     </div>
     <EditAdmin :visible="visible" :form="rowData" @close="closeDialog" />
+    <ClassRole :form="RoleData" :visible="Rolevisible" @close="RolecloseDialog" />
   </div>
 </template>
 <script setup lang='ts'>
 import { ref, reactive, toRefs, onMounted } from 'vue'
 import AlluseDiv from '../business/components/AlluseDiv.vue';
 import ClassNow from './components/ClassNow.vue'
-import { getAdminInfoApi } from '@/request/api'
+import { getRoleListAll, getAdminRole } from '@/request/api'
 import EditAdmin from './components/EditAdmin.vue';
+import ClassRole from './components/ClassRole.vue';
 import 'animate.css';
+import { ElMessage } from 'element-plus'
+import { type MessageTypedFn } from 'element-plus'
 
 const state = reactive<{
   name1: string
   name2: string
   tableData: {}[]
   visible: boolean
+  Rolevisible: boolean
+  RoleData: AdminRoleFormData
   rowData: {}
   total: number
   pageSize: number
@@ -66,6 +72,8 @@ const state = reactive<{
   name2: "更改权限",
   tableData: [],
   visible: false,
+  Rolevisible: false,
+  RoleData: <AdminRoleFormData>{},
   rowData: {},
   total: Number(''),
   pageSize: 1,
@@ -74,16 +82,29 @@ const state = reactive<{
   isShowIcon: false
 })
 onMounted(() => {
-  getData()
+  getRoleData()
 })
 
-const { name1, name2, tableData, visible, rowData, total, pageSize, Data, isshow, isShowIcon } = toRefs(state)
-const getData = () => {
-  getAdminInfoApi({ pageNum: 10, pageSize: pageSize.value }).then(res => {
-    total.value = res.data.list.length
-    Data.value = res.data.list
-    tableData.value = res.data.list.slice(0, 10)
+const { Rolevisible, RoleData, name1, name2, tableData, visible, rowData, total, pageSize, Data, isshow, isShowIcon } = toRefs(state)
+
+const getRoleData = () => {
+  getRoleListAll().then(res => {
+    RoleData.value.roleLists = res.data
+    tableData.value = res.data
+    total.value = res.data.length
+    Data.value = res.data
+    tableData.value = res.data.slice(0, 10)
   })
+}
+const open = (status: number) => {
+  status == 1 ? ElMessage({
+    message: '已开启',
+    type: 'success',
+  }) :
+    ElMessage({
+      message: '已关闭',
+      type: 'warning',
+    })
 }
 const change = () => {
   isshow.value = 2
@@ -91,7 +112,6 @@ const change = () => {
   setTimeout(() => {
     isshow.value = 1
     isShowIcon.value = false
-
   }, 1000);
 }
 //  分页功能
@@ -99,20 +119,30 @@ const handleCurrentChange = (val: number) => {
   pageSize.value = val
   tableData.value = Data.value.slice((pageSize.value - 1) * 10, pageSize.value * 10)
 }
-const allocRole = (data: {}[]) => {
-
+// 分配角色
+const allocRole = (id: number) => {
+  getAdminRole(id).then(res => {
+    Rolevisible.value = true
+    RoleData.value.userRoles = res.data
+  })
 }
+// 编辑
 const editAdmin = (row: AdminObjItf) => {
   visible.value = true
   rowData.value = row
 }
+
 // 关闭弹框
 const closeDialog = (r?: 'reload') => {
   visible.value = false
   if (r === 'reload') {
-    getData()
+    getRoleData()
   }
 }
+const RolecloseDialog = () => {
+  Rolevisible.value = false
+}
+
 // 格式化时间
 const formateDate = (time: string | undefined) => {
   if (!time) {
