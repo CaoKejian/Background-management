@@ -46,7 +46,7 @@ export const getItemUsingApi = (): Promise<RootObjectItemUsing> => request.get('
 
 export const updateAdmin = (id: number, data: AdminObjItf): PromiseRes => request.post('/admin/role/' + id, data)
 
-export const getRoleListAll = (): PromiseRes<[RoleObjItf]> => request.get('/admin/role')
+export const getRoleListAll = (): PromiseRes<RoleObjItf[]> => request.get('/admin/role')
 
-export const getRoleList = (): PromiseRes<[RoleObjItf]> => request.get('/role/list')
+export const getRoleList = (): PromiseRes<RoleObjItf[]> => request.get('/role/list')
 export const getAdminRole = (id:number):PromiseRes<RoleObjItf[]> => request.get('/admin/role/' + id)

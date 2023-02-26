@@ -89,9 +89,6 @@ const { Rolevisible, RoleData, name1, name2, tableData, visible, rowData, total,
 
 const getRoleData = () => {
   getRoleListAll().then(res => {
-    console.log(res);
-
-    // RoleData.value.roleLists = res.data
     total.value = res.data.length
     Data.value = res.data
     tableData.value = res.data.slice(0, 10)
@@ -133,7 +130,6 @@ const allocRole = (id: number) => {
   getAdminRole(id).then(res => {
     Rolevisible.value = true
     RoleData.value.userRoles = res.data[0].data
-    console.log(RoleData.value.userRoles);
   })
 }
 // 编辑

@@ -2,7 +2,7 @@
   <el-dialog v-model="PropData.visible" title="分配角色" :before-close="close">
     <el-form :model="PropData.form">
       <el-form-item>
-        <el-select multiple v-model="form.userRoles" placeholder="Please select a zone">
+        <el-select multiple v-model="roles" placeholder="Please select a zone">
           <el-option v-for="role in form.roleLists" :label="role.name" :value="role.id" />
         </el-select>
       </el-form-item>
