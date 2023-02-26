@@ -2,15 +2,23 @@
   <div class="top">
     <AlluseDiv :name="name1" />
     <div class="top-container">
-      <div><span>当前权限模式：<span class="class">{{ root }}</span><button @click="changeRoot">切换权限模式</button></span></div>
+      <div><span>当前权限模式：<span class="class">{{ root }}</span><button @click="changeRoot">切换权限模式</button><el-icon
+            class="is-loading" v-show="propData.isShowIcon">
+            <Loading />
+          </el-icon></span></div>
+
     </div>
+
   </div>
 </template>
 <script setup lang='ts'>
 import { ref, reactive, toRefs } from 'vue'
 import AlluseDiv from '@/views/business/components/AlluseDiv.vue';
 import { debounce, throttle } from "@/utils/index";
-
+type Props = {
+  isshow: number,
+  isShowIcon: boolean
+}
 
 const state = reactive<{
   root: string
@@ -20,7 +28,12 @@ const state = reactive<{
   name1: "当前权限",
 })
 const { name1, root } = toRefs(state)
+const propData = defineProps<Props>()
+const emit = defineEmits<{
+  (event: 'change'): void
+}>()
 const changeRoot = () => {
+  emit("change")
   if (root.value == '超级用户') {
     debounce(() => {
       root.value = '商品管理员'
@@ -56,6 +69,7 @@ const changeRoot = () => {
       button {
         height: 2rem;
         margin-left: 1.5rem;
+        margin-right: 1rem;
         border-radius: 4px;
         color: white;
         background-color: #0960bd;

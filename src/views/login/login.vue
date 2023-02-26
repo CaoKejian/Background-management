@@ -16,7 +16,6 @@
       :class="`animate__animated ${$route.meta.transition}`">
       <div class="cssLoader17"></div>
     </div>
-
   </div>
 </template>
 <script setup lang='ts'>

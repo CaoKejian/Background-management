@@ -1,12 +1,12 @@
-<template>
-  <div class="wrapper">
+<template #default="{route,Component}">
+  <div class="wrapper" :class="`animate__animated ${$route.meta.transition}`">
     <div class="header">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item :to="{ path: '/business/businessAnalysis' }">Dashboard</el-breadcrumb-item>
         <el-breadcrumb-item><a href="/permissions/permissionsClass">权限分配</a></el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    <ClassNow />
+    <ClassNow @change="change" @rotate="rotate" :isshow="isshow" :isShowIcon="isShowIcon" />
     <div class="bottom">
       <AlluseDiv :name="name2" />
       <el-table :data="tableData" style="width: 100%">
@@ -48,8 +48,7 @@ import AlluseDiv from '../business/components/AlluseDiv.vue';
 import ClassNow from './components/ClassNow.vue'
 import { getAdminInfoApi } from '@/request/api'
 import EditAdmin from './components/EditAdmin.vue';
-
-
+import 'animate.css';
 
 const state = reactive<{
   name1: string
@@ -60,6 +59,8 @@ const state = reactive<{
   total: number
   pageSize: number
   Data: {}[]
+  isshow: number
+  isShowIcon: boolean
 }>({
   name1: "当前权限",
   name2: "更改权限",
@@ -68,19 +69,30 @@ const state = reactive<{
   rowData: {},
   total: Number(''),
   pageSize: 1,
-  Data: []
+  Data: [],
+  isshow: 1,
+  isShowIcon: false
 })
 onMounted(() => {
   getData()
 })
 
-const { name1, name2, tableData, visible, rowData, total, pageSize, Data } = toRefs(state)
+const { name1, name2, tableData, visible, rowData, total, pageSize, Data, isshow, isShowIcon } = toRefs(state)
 const getData = () => {
   getAdminInfoApi({ pageNum: 10, pageSize: pageSize.value }).then(res => {
     total.value = res.data.list.length
     Data.value = res.data.list
     tableData.value = res.data.list.slice(0, 10)
   })
+}
+const change = () => {
+  isshow.value = 2
+  isShowIcon.value = true
+  setTimeout(() => {
+    isshow.value = 1
+    isShowIcon.value = false
+
+  }, 1000);
 }
 //  分页功能
 const handleCurrentChange = (val: number) => {
