@@ -29,8 +29,7 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: () => import('../views/home/home.vue'),
-      // redirect: '/business/businessAnalysis',
-      redirect: '/login',
+      redirect: '/business/businessAnalysis',
       children: [
         {
           path: 'index',
