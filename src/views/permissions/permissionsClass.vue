@@ -7,6 +7,7 @@
       </el-breadcrumb>
     </div>
     <ClassNow @change="change" :isshow="isshow" :isShowIcon="isShowIcon" />
+    <ClassSearch @search="search" @refalsh="refalsh" />
     <div class="bottom">
       <AlluseDiv :name="name2" />
       <el-table :data="tableData" style="width: 100%">
@@ -47,6 +48,7 @@
 import { ref, reactive, toRefs, onMounted } from 'vue'
 import AlluseDiv from '../business/components/AlluseDiv.vue';
 import ClassNow from './components/ClassNow.vue'
+import ClassSearch from './components/ClassSearch.vue';
 import { getRoleListAll, getAdminRole, getRoleList } from '@/request/api'
 import EditAdmin from './components/EditAdmin.vue';
 import ClassRole from './components/ClassRole.vue';
@@ -54,8 +56,8 @@ import 'animate.css';
 import { ElMessage } from 'element-plus'
 
 const state = reactive<{
-  name1: string
   name2: string
+  name3: string
   tableData: {}[]
   visible: boolean
   Rolevisible: boolean
@@ -67,8 +69,8 @@ const state = reactive<{
   isshow: number
   isShowIcon: boolean
 }>({
-  name1: "当前权限",
   name2: "更改权限",
+  name3: "搜索",
   tableData: [],
   visible: false,
   Rolevisible: false,
@@ -85,7 +87,7 @@ onMounted(() => {
   RoleList()
 })
 
-const { Rolevisible, RoleData, name1, name2, tableData, visible, rowData, total, pageSize, Data, isshow, isShowIcon } = toRefs(state)
+const { Rolevisible, RoleData, name2, name3, tableData, visible, rowData, total, pageSize, Data, isshow, isShowIcon } = toRefs(state)
 
 const getRoleData = () => {
   getRoleListAll().then(res => {
@@ -94,12 +96,11 @@ const getRoleData = () => {
     tableData.value = res.data.slice(0, 10)
   })
 }
+
 // 获取三种角色
 const RoleList = () => {
   getRoleList().then(res => {
-    console.log(res);
     RoleData.value.roleLists = res.data
-    console.log(RoleData.value.roleLists);
   })
 }
 const open = (status: number) => {
@@ -120,6 +121,16 @@ const change = () => {
     isShowIcon.value = false
   }, 1000);
 }
+// 搜索 子传来的 
+const search = (e: {}) => {
+  tableData.value = [e]
+}
+const refalsh = () => {
+  getRoleData()
+  console.log('重新了');
+
+}
+
 //  分页功能
 const handleCurrentChange = (val: number) => {
   pageSize.value = val

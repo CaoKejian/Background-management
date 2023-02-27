@@ -50,3 +50,6 @@ export const getRoleListAll = (): PromiseRes<RoleObjItf[]> => request.get('/admi
 
 export const getRoleList = (): PromiseRes<RoleObjItf[]> => request.get('/role/list')
 export const getAdminRole = (id:number):PromiseRes<RoleObjItf[]> => request.get('/admin/role/' + id)
+
+// 权限分配搜索查询
+export const SearchAdminRole = (username:string) => request.get('/admin/role/search/' + username)

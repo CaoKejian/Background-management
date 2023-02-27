@@ -7,7 +7,6 @@
             <Loading />
           </el-icon></span></div>
     </div>
-
   </div>
 </template>
 <script setup lang='ts'>
@@ -15,6 +14,7 @@ import { ref, reactive, toRefs } from 'vue'
 import AlluseDiv from '@/views/business/components/AlluseDiv.vue';
 import { debounce, throttle } from "@/utils/index";
 import { ElMessage } from 'element-plus'
+
 
 type Props = {
   isshow: number,
