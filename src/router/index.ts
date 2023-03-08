@@ -1,10 +1,12 @@
-import { createRouter, createWebHistory, type RouteLocationNormalized } from 'vue-router'
+import { createRouter, useRouter, createWebHistory, type RouteLocationNormalized } from 'vue-router'
 import { createVNode, render } from 'vue'
 import pinia from '../stores/store'
 import loadingBar from '../components/loadingBar.vue'
 import { useInfoStore } from '../stores/counter'
 const useStore = useInfoStore(pinia);
 import { adminInfoApi } from '../request/api'
+import { ElMessage } from 'element-plus'
+const mRouter = useRouter()
 
 declare module 'vue-router' {
   interface RouteMeta {
@@ -91,20 +93,32 @@ const setNewArr = () => {
 const Vnode = createVNode(loadingBar)
 render(Vnode, document.body)
 router.beforeEach((to, from, next) => {
-
-  if (useStore.menu.length === 1) {
+  const data = localStorage.getItem('pinia-info')
+  if (data !== null && useStore.menu.length === 1) {
     adminInfoApi().then(res => {
       useStore.getAdminInfo().then(() => {
         setNewArr()
         next(to)
       })
     })
-  } else if (useStore.menu.length !== 1 && from.path === '/login' && to.path === '/index') {
+  } else if (data !== null && useStore.menu.length !== 1 && from.path === '/login' && to.path === '/index') {
     setNewArr()
     next()
+  } else if (data == null) {
+    adminInfoApi().then(res => {
+      useStore.getAdminInfo().then(() => {
+        setNewArr()
+        next('/login')
+        ElMessage({
+          message: '登录已失效',
+          type: 'error',
+        })
+      })
+    })
   } else {
     next()
   }
+
   Vnode.component?.exposed?.startLoading()
   setTitle(to)
 });

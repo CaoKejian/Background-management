@@ -127,8 +127,6 @@ const search = (e: {}) => {
 }
 const refalsh = () => {
   getRoleData()
-  console.log('重新了');
-
 }
 
 //  分页功能

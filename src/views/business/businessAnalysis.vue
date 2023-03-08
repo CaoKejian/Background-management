@@ -15,7 +15,7 @@ import AnalysisCenter from './components/AnalysisCenter.vue';
 import AnalysisDiv from './components/AnalysisDiv.vue';
 import AnalysisDivRight from './components/AnalysisDivRight.vue';
 import 'animate.css';
-// :class=``
+
 </script>
 <style lang='less' scoped>
 .wrapper {
