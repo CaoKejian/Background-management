@@ -1,17 +1,17 @@
 <template>
   <el-dialog v-model="PropData.visible" title="编辑资源信息" :before-close="close">
-    <el-form :model="form">
+    <el-form :model="newform">
       <el-form-item label="资源名称" :label-width="formLabelWidth">
-        <el-input v-model="form.name" autocomplete="off" />
+        <el-input v-model="newform.name" autocomplete="off" />
       </el-form-item>
       <el-form-item label="资源路径" :label-width="formLabelWidth">
-        <el-input v-model="form.address" autocomplete="off" />
+        <el-input v-model="newform.address" autocomplete="off" />
       </el-form-item>
       <el-form-item label="资源描述" :label-width="formLabelWidth">
-        <el-input v-model="form.content" autocomplete="off" />
+        <el-input v-model="newform.content" autocomplete="off" />
       </el-form-item>
       <el-form-item label="时间" :label-width="formLabelWidth">
-        <el-input v-model="form.addData" autocomplete="off" />
+        <el-input v-model="newform.addData" autocomplete="off" />
       </el-form-item>
     </el-form>
     <template #footer>
@@ -25,21 +25,27 @@
   </el-dialog>
 </template>
 <script setup lang='ts'>
-import { reactive, ref, toRefs } from 'vue'
+import { reactive, ref, toRefs, watch } from 'vue'
 type Props = {
   visible: boolean,
   form: peopleObjItf
 }
 const state = reactive<{
   formLabelWidth: string
+  newform: peopleObjItf
 }>({
   formLabelWidth: '120px',
+  newform: {}
 })
-const { formLabelWidth } = toRefs(state)
+const { formLabelWidth, newform } = toRefs(state)
 const PropData = defineProps<Props>()
 const emits = defineEmits<{
   (event: "close"): void
 }>()
+// 拷贝from
+watch(() => PropData.form, () => {
+  newform.value = { ...PropData.form }
+})
 const close = () => {
   emits('close')
 }
