@@ -6,7 +6,7 @@
         <span>输入账号</span>
         <el-input v-model="username" class="w-50 m-2" placeholder="账号名称/关键字" :prefix-icon="Search" />
       </div>
-      <div>
+      <div class="box2">
         <el-icon class="is-loading" v-show="showIcon">
           <Loading />
         </el-icon>
@@ -16,12 +16,14 @@
   </div>
 </template>
 <script setup lang='ts'>
-import { ref, reactive, toRefs, watch } from 'vue'
+import { ref, reactive, toRefs, watch, onMounted, onUnmounted } from 'vue'
 import AlluseDiv from '@/views/business/components/AlluseDiv.vue';
 import { Search } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import { SearchAdminRole } from '@/request/api'
-
+type keyDownRes = {
+  keyCode: number
+}
 const username = ref('')
 const showIcon = ref<boolean>(false)
 const state = reactive<{
@@ -65,17 +67,43 @@ const submit = () => {
   })
 
 }
+onMounted(() => {
+  window.addEventListener('keydown', keyDown)
+})
+onUnmounted(() => {
+  window.removeEventListener('keydown', keyDown, false)
+})
+
+const keyDown = (e: keyDownRes) => {
+  if (e.keyCode == 13) {
+    submit()
+  }
+}
 </script>
 <style lang='less' scoped>
 .container {
   width: 100%;
+  min-width: 500px;
   background-color: #fff;
+  height: 60px;
+  line-height: 60px;
   display: flex;
   justify-content: space-between;
 
   .box1 {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
+    align-items: center;
+
+    span {
+      width: 110px;
+      min-width: 80px;
+      margin-left: 20px;
+    }
+  }
+
+  .box2 {
+    margin-right: 20px;
   }
 }
 </style>

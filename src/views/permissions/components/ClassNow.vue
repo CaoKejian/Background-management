@@ -57,6 +57,7 @@ const changeRoot = () => {
 <style lang='less' scoped>
 .top {
   width: 96%;
+  min-width: 500px;
   margin: 20px auto;
   border-radius: 3px;
 

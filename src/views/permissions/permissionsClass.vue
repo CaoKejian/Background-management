@@ -181,6 +181,8 @@ const addZear = (num: number) => {
 .wrapper {
   width: 100%;
   min-height: 100%;
+  min-width: 700px;
+
   background-color: #f0f2f5;
   overflow: hidden;
 
