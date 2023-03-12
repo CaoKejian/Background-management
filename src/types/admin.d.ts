@@ -1,5 +1,5 @@
 interface AdminObjItf {
-  id?:number
+  id?: number
   username?: string
   nickName?: string
   email?: string
@@ -9,6 +9,13 @@ interface AdminObjItf {
 }
 
 interface AdminRoleFormData {
-  userRoles:RoleListItf[]
-  roleLists:RoleObjItf[]
+  userRoles: RoleListItf[]
+  roleLists: RoleObjItf[]
+}
+
+interface peopleObjItf {
+  name: string
+  address: string
+  content: string
+  addData: string
 }
