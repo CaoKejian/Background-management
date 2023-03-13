@@ -26,6 +26,7 @@
 </template>
 <script setup lang='ts'>
 import { reactive, ref, toRefs, watch } from 'vue'
+import { ResourceUpdate } from '@/request/api'
 type Props = {
   visible: boolean,
   form: peopleObjItf
@@ -41,6 +42,7 @@ const { formLabelWidth, newform } = toRefs(state)
 const PropData = defineProps<Props>()
 const emits = defineEmits<{
   (event: "close"): void
+  (event: "reload"): void
 }>()
 // 拷贝from
 watch(() => PropData.form, () => {
@@ -50,7 +52,12 @@ const close = () => {
   emits('close')
 }
 const confirm = () => {
-  emits('close')
+  if (newform.value.number) {
+    ResourceUpdate(newform.value.number, newform.value).then(res => {
+      emits('close')
+      emits('reload')
+    })
+  }
 }
 </script>
 <style lang='less' scoped></style>

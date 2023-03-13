@@ -49,10 +49,13 @@ export const updateAdmin = (id: number, data: AdminObjItf): PromiseRes => reques
 export const getRoleListAll = (): PromiseRes<RoleObjItf[]> => request.get('/admin/role')
 
 export const getRoleList = (): PromiseRes<RoleObjItf[]> => request.get('/role/list')
-export const getAdminRole = (id:number):PromiseRes<RoleObjItf[]> => request.get('/admin/role/' + id)
+export const getAdminRole = (id: number): PromiseRes<RoleObjItf[]> => request.get('/admin/role/' + id)
 
 // 权限分配搜索查询
-export const SearchAdminRole = (username:string) => request.get('/admin/role/search/' + username)
+export const SearchAdminRole = (username: string) => request.get('/admin/role/search/' + username)
 
-// 资源列表获取
+// 资源列表 获取
 export const getResourceList = () => request.get('/people/list')
+//资源列表 更新
+
+export const ResourceUpdate = (number: number,data:peopleObjItf): PromiseRes<peopleObjItf[]> => request.post('/people/list/' + number,data)

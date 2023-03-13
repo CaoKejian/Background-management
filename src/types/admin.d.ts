@@ -15,6 +15,7 @@ interface AdminRoleFormData {
 
 interface peopleObjItf {
   name?: string
+  number?: number
   address?: string
   content?: string
   addData?: string

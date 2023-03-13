@@ -25,7 +25,7 @@
           v-model:currentPage="state.pageSize" :total="state.total" />
       </div>
     </div>
-    <EditPeople :visible="visible" :form="form" @close="closeDialog" />
+    <EditPeople :visible="visible" :form="form" @reload="reload" @close="closeDialog" />
   </div>
 </template>
 <script setup lang='ts'>
@@ -59,17 +59,23 @@ const editBtn = (row: peopleObjItf) => {
 const closeDialog = () => {
   visible.value = false
 }
+const reload = () => {
+  getData()
+}
+const getData = () => {
+  getResourceList().then(res => {
+    tableData.value = res.data.slice(0, 10)
+    Data.value = res.data
+    total.value = res.data.length
+  })
+}
 //分页功能
 const handleCurrentChange = (val: number) => {
   pageSize.value = val
   tableData.value = Data.value.slice((pageSize.value - 1) * 10, pageSize.value * 10)
 }
 onMounted(() => {
-  getResourceList().then(res => {
-    tableData.value = res.data.slice(0, 10)
-    Data.value = res.data
-    total.value = res.data.length
-  })
+  getData()
 })
 </script>
 <style lang='less' scoped>
