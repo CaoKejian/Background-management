@@ -53,3 +53,6 @@ export const getAdminRole = (id:number):PromiseRes<RoleObjItf[]> => request.get(
 
 // 权限分配搜索查询
 export const SearchAdminRole = (username:string) => request.get('/admin/role/search/' + username)
+
+// 资源列表获取
+export const getResourceList = () => request.get('/people/list')

@@ -21,41 +21,56 @@
             </template>
           </el-table-column>
         </el-table>
+        <el-pagination @current-change="handleCurrentChange" :page-size="10" :pager-count="7" layout="prev, pager, next"
+          v-model:currentPage="state.pageSize" :total="state.total" />
       </div>
     </div>
     <EditPeople :visible="visible" :form="form" @close="closeDialog" />
   </div>
 </template>
 <script setup lang='ts'>
-import { reactive, ref, toRefs } from 'vue'
+import { onMounted, reactive, ref, toRefs } from 'vue'
 import AlluseDiv from '../business/components/AlluseDiv.vue';
 import EditPeople from './components/EditPeople.vue';
+import { getResourceList } from '@/request/api'
 
 const state = reactive<{
   name: string
   tableData: {}[]
+  Data: {}[]
   visible: boolean
   form: peopleObjItf
+  total: number
+  pageSize: number
 }>({
   name: '资源列表',
   visible: false,
   form: <peopleObjItf>{},
-  tableData: [{
-    number: 1,
-    name: '个人信息',
-    address: '/info/infoCenter',
-    content: '',
-    addData: '2023-3-12 22:00'
-  }]
+  tableData: [],
+  Data: [],
+  total: Number(''),
+  pageSize: 1
 })
-const { name, tableData, visible, form } = toRefs(state)
-const editBtn = (row:peopleObjItf) => {
+const { name, tableData, visible, form, total, pageSize, Data } = toRefs(state)
+const editBtn = (row: peopleObjItf) => {
   visible.value = true
   form.value = row
 }
 const closeDialog = () => {
   visible.value = false
 }
+//分页功能
+const handleCurrentChange = (val: number) => {
+  pageSize.value = val
+  tableData.value = Data.value.slice((pageSize.value - 1) * 10, pageSize.value * 10)
+}
+onMounted(() => {
+  getResourceList().then(res => {
+    tableData.value = res.data.slice(0, 10)
+    Data.value = res.data
+    total.value = res.data.length
+  })
+})
 </script>
 <style lang='less' scoped>
 .wrapper {
@@ -82,7 +97,7 @@ const closeDialog = () => {
   .useDiv {
     width: 96%;
     margin: 1.25rem auto;
-    height: 200px;
+    height: auto;
     background-color: #fff;
 
     .table {
