@@ -34,7 +34,8 @@
         </div>
         <!-- v-print指令可以直接绑定到对应的打印区域-->
         <div class="print-button">
-          <el-button v-print="printObj" type="primary" size="default" @click="upadtaPrintStatus">打印</el-button>
+          <el-button style="margin-top: 20px;" v-print="printObj" type="primary" size="default"
+            @click="upadtaPrintStatus">打印</el-button>
         </div>
       </div>
     </div>
@@ -104,6 +105,7 @@ table {
   display: flex;
   flex-direction: column;
   background-color: #fff;
+
 
   thead {
     height: 2rem;

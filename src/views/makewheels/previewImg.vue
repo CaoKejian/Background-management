@@ -12,9 +12,9 @@
     <div class="useDiv">
       <AlluseDiv :name="name" />
       <div class="img">
-        <img @click="preview(0, list)" src='list[0]' alt="">
-        <img @click="preview(1, list)" src='list[1]' alt="">
-        <img @click="preview(2, list)" src="list[2]" alt="">
+        <img @click="preview(0, list)" src='https://picsum.photos/id/68/346/216' alt="">
+        <img @click="preview(1, list)" src='https://picsum.photos/id/67/346/216' alt="">
+        <img @click="preview(2, list)" src="https://picsum.photos/id/66/346/216" alt="">
       </div>
       <el-button style="margin-top: 20px;" type="primary" @click="preview1">预览</el-button>
     </div>
