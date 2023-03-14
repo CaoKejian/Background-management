@@ -16,6 +16,9 @@
       </el-steps>
       <indexOne @add="add" :visible="visible" />
       <indexTow @add="add2" :visible2="visible2" />
+      <indexThree @add="add3" :visible3="visible3" />
+      <indexFore @add='add4' :visible4="visible4" />
+      <div v-show="!visible && !visible2 && !visible3 && !visible4">添加成功</div>
     </div>
   </div>
 </template>
@@ -24,37 +27,51 @@ import { ref, reactive, toRefs } from 'vue'
 import AlluseDiv from '../business/components/AlluseDiv.vue';
 import indexOne from './components/indexOne.vue'
 import indexTow from './components/indexTwo.vue'
+import indexThree from './components/indexThree.vue'
+import indexFore from './components/indexFore.vue'
 const state = reactive<{
   name: string
   form: {}[]
   active: number
   visible: boolean
   visible2: boolean
+  visible3: boolean
+  visible4: boolean
 }>({
   name: "添加商品",
   form: [],
   active: 0,
   visible: true,
   visible2: false,
+  visible3: false,
+  visible4: false,
 })
-const { name, active, visible, visible2 } = toRefs(state)
+const { name, active, visible, visible2, visible3, visible4 } = toRefs(state)
 const add = (num: number) => {
-  if (num < 4) {
-    active.value++
-  }
-  console.log(num);
-
+  active.value++
   if (active.value == 1) {
     visible.value = false
     visible2.value = true
   }
 }
 const add2 = () => {
-  if (active.value < 4) {
-    active.value++
-  }
+  active.value++
   if (active.value == 2) {
     visible2.value = false
+    visible3.value = true
+  }
+}
+const add3 = () => {
+  active.value++
+  if (active.value == 3) {
+    visible3.value = false
+    visible4.value = true
+  }
+}
+const add4 = () => {
+  active.value++
+  if (active.value == 4) {
+    visible4.value = false
   }
 }
 </script>
