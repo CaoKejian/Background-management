@@ -1,32 +1,30 @@
 <template #default="{route,Component}">
-  <div class="wrapper" :class="`animate__animated ${$route.meta.transition}`">
+  <div class="wrapper" :class="`animate__animated ${$route.meta.transition}`"
+    v-waterMarker="{ text: '这里是水印', textColor: 'red' }">
     <div class="header">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item :to="{ path: '/makewheels/wheelsList' }">造轮子</el-breadcrumb-item>
         <el-breadcrumb-item><a href="/makewheels/wheelsList">水印实例</a></el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    <div class="box">
+    <!-- <div class="box">
       <span>水印示例</span>
-    </div>
-    <div class="useDiv">
-      <el-button style="margin-top: 20px;" type="primary" @click="add">添加水印</el-button>
-    </div>
+    </div> -->
+    <DragBox width="200px" height="200px" top="200px" v-show="isShowBox">选中拖拽我</DragBox>
   </div>
 </template>
 <script setup lang='ts'>
 import { reactive, ref } from 'vue'
-import AlluseDiv from '../business/components/AlluseDiv.vue';
 import 'animate.css';
-import { preview, closePreview } from 'vue3-preview-image'
-closePreview()
+import DragBox from '@/components/DragVox.vue'
 
 
 const state = reactive<{
+  isShowBox: boolean
 }>({
-
+  isShowBox: true
 })
-const {  } = state
+const { isShowBox } = state
 const add = () => {
 
 }
