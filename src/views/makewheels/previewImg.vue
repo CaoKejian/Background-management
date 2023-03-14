@@ -3,39 +3,18 @@
     <div class="header">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item :to="{ path: '/makewheels/wheelsList' }">造轮子</el-breadcrumb-item>
-        <el-breadcrumb-item><a href="/makewheels/wheelsList">打印</a></el-breadcrumb-item>
+        <el-breadcrumb-item><a href="/makewheels/wheelsList">图片预览实例</a></el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class="box">
-      <span>打印示例</span>
+      <span>图片预览示例</span>
     </div>
     <div class="useDiv">
       <AlluseDiv :name="name" />
-      <div>
-        <div ref="printTest" id="printTest" class="print">
-          <table>
-            <thead>
-              <tr>
-                <th>名字</th>
-                <th>学号</th>
-                <th>年龄</th>
-                <th>公司</th>
-              </tr>
-            </thead>
-            <tbody>
-              <td>
-              <th>Colin</th>
-              <th>2001****37</th>
-              <th>21</th>
-              <th>阿里妈妈</th>
-              </td>
-            </tbody>
-          </table>
-        </div>
-        <!-- v-print指令可以直接绑定到对应的打印区域-->
-        <div class="print-button">
-          <el-button v-print="printObj" type="primary" size="default" @click="upadtaPrintStatus">打印</el-button>
-        </div>
+      <div class="img">
+        <img src="@/assets/img/BingWallpaper.jpg" alt="">
+        <img src="@/assets/img/云梦秦简.jpg" alt="">
+        <img src="@/assets/img/Snipaste_2022-09-25_00-10-07.png" alt="">
       </div>
     </div>
 
@@ -97,29 +76,18 @@ let printObj = reactive({
   .useDiv {
     width: 96%;
     margin: 1.25rem auto;
-  }
-}
 
-table {
-  display: flex;
-  flex-direction: column;
-  background-color: #fff;
+    .img {
+      width: 100%;
+      height: 10rem;
+      display: flex;
+      background-color: #fff;
 
-  thead {
-    height: 2rem;
-    line-height: 2rem;
-
-    th {
-      width: 12.5rem;
-    }
-  }
-
-  tbody {
-    height: 2rem;
-    line-height: 2rem;
-
-    th {
-      width: 12.5rem;
+      img {
+        height: 100%;
+        margin-left: 20px;
+        cursor: pointer;
+      }
     }
   }
 }
