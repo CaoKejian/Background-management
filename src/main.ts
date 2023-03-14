@@ -10,6 +10,8 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import './assets/fonts/iconfont.css'
 import svgIcon from './icons/index.vue'
 import print from 'vue3-print-nb'
+import vue3PreviewImage from 'vue3-preview-image'
+
 
 type Options = {
   key: string
@@ -46,5 +48,6 @@ app.use(store)
 app.use(router)
 app.use(ElementPlus)
 app.use(print)
+app.use(vue3PreviewImage)
 app.mount('#app')
 app.component('svg-icon', svgIcon)
