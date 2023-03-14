@@ -4,14 +4,14 @@
     <div class="header">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item :to="{ path: '/makewheels/wheelsList' }">造轮子</el-breadcrumb-item>
-        <el-breadcrumb-item><a href="/makewheels/wheelsList">水印实例</a></el-breadcrumb-item>
+        <el-breadcrumb-item><a href="/makewheels/wheelsList">拖拽示例</a></el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    <!-- <div class="box">
-      <span>水印示例</span>
-    </div> -->
-    <DragBox width="200px" height="200px" top="200px" v-show="isShowBox">选中拖拽我</DragBox>
+    <div class="box">
+      <span>拖拽示例</span>
+    </div>
   </div>
+  <DragBox width="200px" height="100px" bgColor="#fff" top="200px" v-show="isShowBox">选中拖拽我</DragBox>
 </template>
 <script setup lang='ts'>
 import { reactive, ref } from 'vue'
@@ -66,5 +66,7 @@ const add = () => {
     width: 96%;
     margin: 1.25rem auto;
   }
+
+
 }
 </style>
