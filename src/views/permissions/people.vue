@@ -1,5 +1,5 @@
-<template>
-  <div class="wrapper">
+<template #default="{route,Component}">
+  <div class="wrapper" :class="`animate__animated ${$route.meta.transition}`">
     <div class="header">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item :to="{ path: '/business/businessAnalysis' }">Dashboard</el-breadcrumb-item>
@@ -33,6 +33,7 @@ import { onMounted, reactive, ref, toRefs } from 'vue'
 import AlluseDiv from '../business/components/AlluseDiv.vue';
 import EditPeople from './components/EditPeople.vue';
 import { getResourceList } from '@/request/api'
+import 'animate.css';
 
 const state = reactive<{
   name: string
@@ -79,6 +80,11 @@ onMounted(() => {
 })
 </script>
 <style lang='less' scoped>
+a {
+  text-decoration: none;
+  color: #616367;
+}
+
 .wrapper {
   width: 100%;
   min-height: 100%;

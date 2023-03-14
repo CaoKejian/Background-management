@@ -9,6 +9,7 @@ import './assets/css/reset.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import './assets/fonts/iconfont.css'
 import svgIcon from './icons/index.vue'
+import print from 'vue3-print-nb'
 
 type Options = {
   key: string
@@ -44,5 +45,6 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 app.use(store)
 app.use(router)
 app.use(ElementPlus)
+app.use(print)
 app.mount('#app')
 app.component('svg-icon', svgIcon)
