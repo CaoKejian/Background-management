@@ -27,10 +27,15 @@
       <el-table-column prop="modify" label="操作">
         <template #default="{ row }">
           <el-button type="primary" @click="modify(row)">编辑</el-button>
-          <el-button type="primary">删除</el-button>
+          <el-popconfirm title="确定删除?" @confirm="confirm(row.num)" confirm-button-type="danger">
+            <template #reference>
+              <el-button type="danger">删除</el-button>
+            </template>
+          </el-popconfirm>
         </template>
       </el-table-column>
     </el-table>
+
     <el-pagination @current-change="handleCurrentChange" :page-size="10" :pager-count="7" layout="prev, pager, next"
       :total="state.total" v-model:currentPage="state.pageSize" />
   </div>
@@ -39,7 +44,7 @@
 import { onMounted, reactive, ref, toRefs } from 'vue'
 import { ElMessage } from 'element-plus'
 import { useProductStore } from '@/stores/product'
-import { getProductList } from '@/request/api'
+import { getProductList, deleteProduct } from '@/request/api'
 
 const useProduct = useProductStore()
 const state = reactive<{
@@ -62,6 +67,12 @@ const modify = (row: listRole) => {
 const handleCurrentChange = (val: number) => {
   state.pageSize = val
   tableData.value = Data.value.slice((state.pageSize - 1) * 10, state.pageSize * 10)
+}
+
+const confirm = (num: number) => {
+  deleteProduct(num).then(res => {
+    console.log(res);
+  })
 }
 onMounted(() => {
   getProductList().then(res => {
@@ -101,6 +112,8 @@ const open3 = (status: number) => {
       type: 'warning',
     })
 }
+
+
 
 </script>
 <style lang='less' scoped>

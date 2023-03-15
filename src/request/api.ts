@@ -58,8 +58,10 @@ export const SearchAdminRole = (username: string) => request.get('/admin/role/se
 export const getResourceList = () => request.get('/people/list')
 //资源列表 更新
 
-export const ResourceUpdate = (number: number,data:peopleObjItf): PromiseRes<peopleObjItf[]> => request.post('/people/list/' + number,data)
+export const ResourceUpdate = (number: number, data: peopleObjItf): PromiseRes<peopleObjItf[]> => request.post('/people/list/' + number, data)
 
 // 获取商品列表数据
 
 export const getProductList = () => request.get('/product/list')
+// 删除商品列表数据
+export const deleteProduct = (num: number) => request.get('/product/list/' + num)
