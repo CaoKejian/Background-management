@@ -65,3 +65,5 @@ export const ResourceUpdate = (number: number, data: peopleObjItf): PromiseRes<p
 export const getProductList = () => request.get('/product/list')
 // 删除商品列表数据
 export const deleteProduct = (num: number) => request.get('/product/list/' + num)
+// 更新商品数据
+export const updateProduct = (num: number,data:listRole) => request.post('/product/update/' + num,data)

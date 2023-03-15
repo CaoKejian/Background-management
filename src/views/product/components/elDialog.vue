@@ -28,6 +28,7 @@
 import { onMounted, reactive, ref, toRefs, watch } from 'vue'
 import { useProductStore } from "@/stores/product"
 import { ElMessage } from 'element-plus'
+import { updateProduct } from '@/request/api'
 
 const useProduct = useProductStore()
 
@@ -51,6 +52,9 @@ const confirm = () => {
     message: '编辑成功',
     type: 'success',
   })
+  if (useProduct.row.num) {
+    updateProduct(useProduct.row.num, useProduct.row).then()
+  }
 }
 
 </script>

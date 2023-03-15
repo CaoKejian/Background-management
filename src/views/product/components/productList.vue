@@ -71,15 +71,22 @@ const handleCurrentChange = (val: number) => {
 
 const confirm = (num: number) => {
   deleteProduct(num).then(res => {
-    console.log(res);
+    getProduct()
+    ElMessage({
+      message: '已删除',
+      type: 'warning',
+    })
   })
 }
-onMounted(() => {
+const getProduct = () => {
   getProductList().then(res => {
     tableData.value = res.data.slice(0, 10)
     Data.value = res.data
     state.total = res.data.length
   })
+}
+onMounted(() => {
+  getProduct()
 })
 
 const open1 = (status: number) => {
