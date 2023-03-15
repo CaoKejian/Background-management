@@ -20,3 +20,13 @@ interface peopleObjItf {
   content?: string
   addData?: string
 }
+
+type listRole = {
+  num?: number
+  firstname?: string,
+  lastname?: string,
+  label?: [],
+  storage?: number,
+  integral?: number,
+  modify?: []
+}
