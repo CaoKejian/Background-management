@@ -14,11 +14,16 @@
         <el-step title="填写商品属性 " />
         <el-step title="最终验证 " />
       </el-steps>
-      <indexOne @add="add" :visible="visible" />
-      <indexTow @add="add2" :visible2="visible2" />
-      <indexThree @add="add3" :visible3="visible3" />
-      <indexFore @add='add4' :visible4="visible4" />
-      <div v-show="!visible && !visible2 && !visible3 && !visible4">添加成功</div>
+      <div class="use">
+        <indexOne @add="add" :visible="visible" />
+        <indexTow @add="add2" :visible2="visible2" />
+        <indexThree @add="add3" :visible3="visible3" />
+        <indexFore @add='add4' :visible4="visible4" />
+      </div>
+
+      <div class="svg-box" v-show="!visible && !visible2 && !visible3 && !visible4">
+        <svg-icon name="success" class="svg"></svg-icon>
+      </div>
     </div>
   </div>
 </template>
@@ -102,10 +107,23 @@ const add4 = () => {
     background-color: #fff;
 
     .table {
-      width: 40%;
+      width: 60%;
       margin: 1.25rem auto;
       padding: 1.25rem 0;
     }
+
+    .use {
+      width: 100%;
+    }
+  }
+}
+
+.svg-box {
+  .svg {
+    font-size: 520px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
   }
 }
 </style>

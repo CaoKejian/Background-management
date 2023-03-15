@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@element-plus/icons-vue": "2.0.10",
+    "@jsdawn/x": "2.0.4",
     "animate.css": "4.1.1",
     "axios": "1.2.6",
     "echarts": "5.4.1",
