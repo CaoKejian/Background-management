@@ -25,7 +25,7 @@
           v-model:currentPage="state.pageSize" :total="state.total" />
       </div>
     </div>
-    <EditPe ople :visible="visible" :form="form" @reload="reload" @close="closeDialog" />
+    <EditPeople ople :visible="visible" :form="form" @reload="reload" @close="closeDialog" />
   </div>
 </template>
 <script setup lang='ts'>
