@@ -4,7 +4,8 @@ import { defineStore } from 'pinia'
 export const useProductStore = defineStore({
   id: 'product',
   state: () => ({
-    row:<listRole>{}
+    row:<listRole>{},
+    visible:<boolean>false
   }),
   getters: {
 

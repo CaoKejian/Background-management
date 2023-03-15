@@ -59,3 +59,7 @@ export const getResourceList = () => request.get('/people/list')
 //资源列表 更新
 
 export const ResourceUpdate = (number: number,data:peopleObjItf): PromiseRes<peopleObjItf[]> => request.post('/people/list/' + number,data)
+
+// 获取商品列表数据
+
+export const getProductList = () => request.get('/product/list')

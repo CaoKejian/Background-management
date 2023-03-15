@@ -9,7 +9,7 @@
     <div class="center">
       <AlluseDiv :name="name" />
       <productList />
-      <elDialog :visible="visible" />
+      <elDialog :visible="useProduct.visible" />
     </div>
   </div>
 </template>
@@ -19,15 +19,15 @@ import AlluseDiv from '../business/components/AlluseDiv.vue';
 import productList from './components/productList.vue';
 import elDialog from './components/elDialog.vue';
 import { ElMessage } from 'element-plus'
+import { useProductStore } from '@/stores/product'
 
+const useProduct = useProductStore()
 const state = reactive<{
   name: string
-  visible: boolean
 }>({
   name: "商品列表",
-  visible: false
 })
-const { name, visible } = toRefs(state)
+const { name } = toRefs(state)
 
 </script>
 <style lang='less' scoped>

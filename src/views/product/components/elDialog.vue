@@ -1,17 +1,17 @@
 <template>
-  <el-dialog v-model="PropData.visible" title="编辑资源信息" :before-close="close">
+  <el-dialog v-model="useProduct.visible" title="编辑资源信息" :before-close="close">
     <el-form :model="newform">
-      <el-form-item label="资源名称" :label-width="formLabelWidth">
-        <el-input v-model="newform.name" autocomplete="off" />
+      <el-form-item label="商品品牌" :label-width="formLabelWidth">
+        <el-input v-model="newform.firstname" autocomplete="off" />
       </el-form-item>
-      <el-form-item label="资源路径" :label-width="formLabelWidth">
-        <el-input v-model="newform.address" autocomplete="off" />
+      <el-form-item label="商品名称" :label-width="formLabelWidth">
+        <el-input v-model="newform.lastname" autocomplete="off" />
       </el-form-item>
-      <el-form-item label="资源描述" :label-width="formLabelWidth">
-        <el-input v-model="newform.content" autocomplete="off" />
+      <el-form-item label="获得积分" :label-width="formLabelWidth">
+        <el-input v-model="newform.integral" autocomplete="off" />
       </el-form-item>
-      <el-form-item label="时间" :label-width="formLabelWidth">
-        <el-input v-model="newform.addData" autocomplete="off" />
+      <el-form-item label="库存" :label-width="formLabelWidth">
+        <el-input v-model="newform.storage" autocomplete="off" />
       </el-form-item>
     </el-form>
     <template #footer>
@@ -25,24 +25,40 @@
   </el-dialog>
 </template>
 <script setup lang='ts'>
-import { reactive, ref, toRefs } from 'vue'
+import { onMounted, reactive, ref, toRefs } from 'vue'
+import { useProductStore } from "@/stores/product"
+import { ElMessage } from 'element-plus'
+
+const useProduct = useProductStore()
 type Proptype = {
   visible: boolean
 }
 const PropData = defineProps<Proptype>()
 const state = reactive<{
-  formLabelWidth:string
-  newform:any
+  formLabelWidth: string
+  newform: any
 }>({
   formLabelWidth: '120px',
   newform: []
 })
 const { formLabelWidth, newform } = toRefs(state)
 const close = () => {
-
+  useProduct.visible = false
+  ElMessage({
+    message: '已关闭',
+    type: 'warning',
+  })
 }
 const confirm = () => {
-
+  useProduct.visible = false
+  ElMessage({
+    message: '编辑成功',
+    type: 'success',
+  })
 }
+onMounted(() => {
+  newform.value = useProduct.row
+})
+
 </script>
 <style lang='less' scoped></style>

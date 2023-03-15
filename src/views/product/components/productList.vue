@@ -31,54 +31,44 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-pagination @current-change="handleCurrentChange" :page-size="10" :pager-count="7" layout="prev, pager, next"
+      :total="state.total" v-model:currentPage="state.pageSize" />
   </div>
 </template>
 <script setup lang='ts'>
-import { ref } from 'vue'
+import { onMounted, reactive, ref, toRefs } from 'vue'
 import { ElMessage } from 'element-plus'
 import { useProductStore } from '@/stores/product'
+import { getProductList } from '@/request/api'
 
-const tableData = [{
-  num: 1,
-  firstname: '美的',
-  lastname: '冰箱',
-  label: [0, 1, 0],
-  storage: 999,
-  integral: 120,
-  modify: []
-},
-{
-  num: 1,
-  firstname: '美的',
-  lastname: '冰箱',
-  label: [],
-  storage: 999,
-  integral: 110,
-  modify: []
-},
-{
-  num: 1,
-  firstname: '美的',
-  lastname: '冰箱',
-  label: [],
-  storage: 999,
-  integral: 110,
-  modify: []
-},
-{
-  num: 1,
-  firstname: '美的',
-  lastname: '冰箱',
-  label: [],
-  storage: 999,
-  integral: 110,
-  modify: []
-}
-]
+const useProduct = useProductStore()
+const state = reactive<{
+  total: number
+  pageSize: number
+  tableData: listRole[]
+  Data: listRole[]
+}>({
+  total: 0,
+  pageSize: 1,
+  tableData: [],
+  Data: []
+})
+const { tableData, Data } = toRefs(state)
 const modify = (row: listRole) => {
-
+  useProduct.row = row
+  useProduct.visible = true
 }
-
+const handleCurrentChange = (val: number) => {
+  state.pageSize = val
+  tableData.value = Data.value.slice((state.pageSize - 1) * 10, state.pageSize * 10)
+}
+onMounted(() => {
+  getProductList().then(res => {
+    tableData.value = res.data.slice(0, 10)
+    Data.value = res.data
+    state.total = res.data.length
+  })
+})
 
 const open1 = (status: number) => {
   status == 1 ? ElMessage({
@@ -112,4 +102,8 @@ const open3 = (status: number) => {
 }
 
 </script>
-<style lang='less' scoped></style>
+<style lang='less' scoped>
+.el-pagination {
+  float: right;
+}
+</style>
