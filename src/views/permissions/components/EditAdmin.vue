@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="propData.visible" title="Shipping address" :before-close="close">
+  <el-dialog v-model="propData.visible" title="Shipping address" :before-close="close1">
     <el-form :model="newForm" :label-width="formLabelWidth">
       <el-form-item label="账号：">
         <el-input v-model="newForm.username" autocomplete="off" />
@@ -23,7 +23,7 @@
     </el-form>
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="close">取消</el-button>
+        <el-button @click="close()">取消</el-button>
         <el-button type="primary" @click="modify">
           完成
         </el-button>
@@ -33,7 +33,16 @@
 </template>
 <script setup lang='ts'>
 import { ref, reactive, toRefs, watch } from 'vue'
-import { updateAdmin } from '@/request/api'
+import { updateAdmin } from '../../../request/api'
+interface AdminObjItf {
+  id?: number
+  username?: string
+  nickName?: string
+  email?: string
+  password?: string
+  note?: string
+  status?: number
+}
 type Props = {
   visible: boolean,
   form: AdminObjItf
@@ -55,7 +64,9 @@ watch(() => propData.form, () => {
 const emit = defineEmits<{
   (event: "close", r?: "reload"): void
 }>()
-
+const close1 = () => {
+  emit("close")
+}
 const close = (r?: 'reload') => {
   emit("close", r)
 }
