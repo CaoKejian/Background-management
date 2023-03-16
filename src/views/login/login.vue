@@ -1,17 +1,28 @@
 <template #default="{route,Component}">
-  <div :class="isshow !== 1 ? 'active' : 'wrapper' && `animate__animated ${$route.meta.transition}`">
-    <el-form ref="ruleFormRef" :model="ruleForm" :rules="rules" label-width="120px" class="demo-ruleForm">
-      <el-form-item label="用户名" prop="username">
-        <el-input v-model="ruleForm.username" type="text" autocomplete="off" />
-      </el-form-item>
-      <el-form-item label="密码" prop="pwd">
-        <el-input v-model="ruleForm.pwd" type="password" autocomplete="off" />
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="submitForm()">Submit</el-button>
-      </el-form-item>
-    </el-form>
-
+  <div :class="isshow !== 1 ? 'active' : 'wrapper' && `animate__animated ${$route.meta.transition}`" class="wrapper">
+    <div class="fake">
+      <div class="box1 animate__animated animate__fadeInLeftBig">
+        <svg-icon name="fashion" class="svg"></svg-icon>
+      </div>
+    </div>
+    <div class="login">
+      <div class="login-box animate__animated animate__zoomIn">
+        <el-form ref="ruleFormRef" :model="ruleForm" :rules="rules" label-width="120px" class="demo-ruleForm">
+          <el-form-item label="">
+            <h1 style="font-size: 24px;font-weight: bold;">欢迎回来</h1>
+          </el-form-item>
+          <el-form-item label="用户名" prop="username">
+            <el-input v-model="ruleForm.username" type="text" autocomplete="off" />
+          </el-form-item>
+          <el-form-item label="密码" prop="pwd">
+            <el-input v-model="ruleForm.pwd" type="password" autocomplete="off" />
+          </el-form-item>
+          <el-form-item>
+            <el-button class="btn" @click="submitForm()">Submit</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+    </div>
     <div id="cssLoader17" class="main-wrap main-wrap--white " v-show="isshow !== 1"
       :class="`animate__animated ${$route.meta.transition}`">
       <div class="cssLoader17"></div>
@@ -32,13 +43,6 @@ type Loginitf = {
   username: string
   pwd: string
 }
-interface AdminInfo {
-  code: number;
-  data: {
-    menu: { parentId: number; id: number; children?: any[] | undefined; name: string; }[];
-  }[];
-}
-
 
 const state = reactive({
   ruleForm: {
@@ -81,4 +85,68 @@ const submitForm = () => {
   }).catch(() => { })
 }
 </script>
-<style lang='less' scoped></style>
+<style lang='less' scoped>
+/deep/ .el-form-item {
+  margin: 1.875rem 0;
+}
+
+.wrapper {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+
+  .fake {
+    width: 50%;
+    background-color: #2c41b4;
+    border: 0 0 0 50%;
+
+    .box1 {
+      width: auto;
+      height: 100%;
+
+      .svg {
+        position: relative;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -40%);
+        font-size: 600px;
+      }
+    }
+  }
+
+  .login {
+    width: 50%;
+    background-color: #f0f2f5;
+
+    .login-box {
+      background-color: #fff;
+      border-radius: 15px;
+      // background-color: #5169d5;
+      padding: 1.25rem 5.125rem 1.25rem 1.25rem;
+      margin-left: 30px;
+      width: 50%;
+      min-width: 400px;
+      margin-top: 20%;
+    }
+  }
+}
+
+.active {
+  width: 100%;
+  height: 100vh;
+}
+
+.btn {
+  cursor: pointer;
+  border: none;
+  background-color: #0960bd;
+  color: #fff;
+  width: 100%;
+  height: 2rem;
+  border-radius: 6px;
+}
+
+.animate__animated.animate__fadeInLeftBig {
+  // --animate-duration: 2s;
+}
+</style>
