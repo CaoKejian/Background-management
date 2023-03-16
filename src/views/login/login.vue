@@ -22,6 +22,7 @@
           </el-form-item>
         </el-form>
       </div>
+      <svg-icon name="login2" class="svg2"></svg-icon>
     </div>
     <div id="cssLoader17" class="main-wrap main-wrap--white " v-show="isshow !== 1"
       :class="`animate__animated ${$route.meta.transition}`">
@@ -116,11 +117,12 @@ const submitForm = () => {
 
   .login {
     width: 50%;
-    background-color: #f0f2f5;
+    background-color: #dcdfe2;
 
     .login-box {
       background-color: #fff;
       border-radius: 15px;
+      box-shadow: 4px 4px 20px 2px #fff;
       // background-color: #5169d5;
       padding: 1.25rem 5.125rem 1.25rem 1.25rem;
       margin-left: 30px;
@@ -128,6 +130,31 @@ const submitForm = () => {
       min-width: 400px;
       margin-top: 20%;
     }
+  }
+}
+
+.svg2 {
+  font-size: 400px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.svg2 {
+  animation: myfirst 3s infinite;
+}
+
+@keyframes myfirst {
+  0% {
+    transform: translate(0px, 0px);
+  }
+
+  50% {
+    transform: translate(0px, -30px);
+  }
+
+  100% {
+    transform: translate(0px, 0px);
   }
 }
 
@@ -144,9 +171,5 @@ const submitForm = () => {
   width: 100%;
   height: 2rem;
   border-radius: 6px;
-}
-
-.animate__animated.animate__fadeInLeftBig {
-  // --animate-duration: 2s;
 }
 </style>

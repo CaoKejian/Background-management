@@ -6,7 +6,7 @@
         <span>Background management system</span>
       </div>
     </div>
-    <div class="menu" id="menu">
+    <div class='menu' :style="{ width: actWidth + 'rem' }" id="menu">
       <el-menu active-text-color="#1890ff" background-color="#ffffff" class="el-menu-vertical-demo"
         :default-openeds="openeds" :default-active="activeIndex" text-color="#000" @open="handleOpen" @close="handleClose"
         :unique-opened="true" router>
@@ -30,17 +30,25 @@
         </ul>
       </div>
     </div>
-    <div class="content">
+    <div class="content" :style="{ left: actLeft + 'rem' }">
       <router-view></router-view>
     </div>
   </div>
 </template>
 <script setup lang='ts'>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, reactive, toRefs } from 'vue'
 import { useInfoStore } from '@/stores/counter'
 import { useRouter } from 'vue-router'
 let router = useRouter()
 
+const state = reactive<{
+  actWidth: number
+  actLeft: number
+}>({
+  actWidth: 13,
+  actLeft: 13,
+})
+const { actWidth, actLeft } = toRefs(state)
 const useInfo = useInfoStore()
 const openeds = ref(['1'])
 let activeIndex = ref('/business/businessAnalysis')
@@ -67,6 +75,18 @@ const handleOpen = (key: string, keyPath: string[]) => {
 const handleClose = (key: string, keyPath: string[]) => {
 }
 const clickMenu = () => {
+  if (actWidth.value == 13) {
+    actWidth.value = 8
+
+  } else {
+    actWidth.value = 13
+  }
+
+  if (actLeft.value == 13) {
+    actLeft.value = 8
+  } else {
+    actLeft.value = 13
+  }
 }
 const clickMenuItem = () => {
   activeIndex.value = router.currentRoute.value.fullPath
@@ -106,7 +126,7 @@ const clickMenuItem = () => {
 
   .menu {
     position: fixed;
-    width: 13rem;
+    // width: 13rem;
     top: 3rem;
     left: 0;
     bottom: 0;
@@ -146,7 +166,14 @@ const clickMenuItem = () => {
     right: 0;
     bottom: 0;
     top: 3rem;
-    left: 13rem;
   }
+}
+
+/deep/ .el-menu {
+  height: 100%;
+}
+
+/deep/ .el-icon svg {
+  display: none;
 }
 </style>
