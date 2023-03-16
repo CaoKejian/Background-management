@@ -3,8 +3,8 @@
     <AlluseDiv :name="name" />
     <div class="container">
       <div class="box1">
-        <span>输入账号</span>
-        <el-input v-model="username" class="w-50 m-2" placeholder="账号名称/关键字" :prefix-icon="Search" />
+        <span>输入名称</span>
+        <el-input v-model="lastname" class="w-50 m-2" placeholder="商品名称/关键字" :prefix-icon="Search" />
       </div>
       <div class="box2">
         <el-icon class="is-loading" v-show="showIcon">
@@ -20,11 +20,14 @@ import { ref, reactive, toRefs, watch, onMounted, onUnmounted } from 'vue'
 import AlluseDiv from '@/views/business/components/AlluseDiv.vue';
 import { Search } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
-import { SearchAdminRole } from '@/request/api'
+import { SearchProduct } from '@/request/api'
+import { useProductStore } from '@/stores/product'
+const useProduct = useProductStore()
 type keyDownRes = {
   keyCode: number
 }
-const username = ref('')
+const firstname = ref('')
+const lastname = ref('')
 const showIcon = ref<boolean>(false)
 const state = reactive<{
   name: string
@@ -35,33 +38,34 @@ const state = reactive<{
 })
 const { name, searchData } = toRefs(state)
 
-watch(username, (newVal, oldValue) => {
-  console.log(newVal, oldValue);
-  if (newVal == '') {
-    
+
+watch(lastname, (newVal, oldValue) => {
+  if (lastname.value == '') {
+    useProduct.getProduct()
   }
 })
 const submit = () => {
-  if (username.value == '') {
+  if (firstname.value == '' && lastname.value == '') {
     ElMessage({
       message: '搜索值不能为空',
       type: 'error',
     })
     return
   }
-  showIcon.value = true
-  SearchAdminRole(username.value).then(res => {
+  SearchProduct(lastname.value).then(res => {
     setTimeout(() => {
-      searchData.value = res.data[0]
+      searchData.value = res.data
       const result = JSON.parse(JSON.stringify(searchData.value))
+      useProduct.allList = result
       showIcon.value = false
-    }, 800);
+    }, 200);
     ElMessage({
       message: '查询成功',
       type: 'success',
     })
-  })
+    showIcon.value = true
 
+  })
 }
 onMounted(() => {
   window.addEventListener('keydown', keyDown)
@@ -77,6 +81,10 @@ const keyDown = (e: keyDownRes) => {
 }
 </script>
 <style lang='less' scoped>
+.top {
+  margin-bottom: 20px;
+}
+
 .container {
   width: 100%;
   min-width: 500px;

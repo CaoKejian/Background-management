@@ -7,6 +7,8 @@
       </el-breadcrumb>
     </div>
     <div class="center">
+      <AlluseDiv :name="name1" style="margin-bottom: 20px;" />
+      <productSearch @search="search" @refalsh="refalsh" />
       <AlluseDiv :name="name" />
       <productList />
       <elDialog :visible="useProduct.visible" />
@@ -20,15 +22,25 @@ import productList from './components/productList.vue';
 import elDialog from './components/elDialog.vue';
 import { ElMessage } from 'element-plus'
 import { useProductStore } from '@/stores/product'
+import productSearch from './components/productSearch.vue'
 
 const useProduct = useProductStore()
 const state = reactive<{
   name: string
+  name1: string
+  searchdata: {}[]
 }>({
   name: "商品列表",
+  name1: "筛选搜索",
+  searchdata: []
 })
-const { name } = toRefs(state)
+const { name, name1, searchdata } = toRefs(state)
+const search = (data: {}) => {
+  searchdata.value = [data]
+}
+const refalsh = () => {
 
+}
 </script>
 <style lang='less' scoped>
 .wrapper {

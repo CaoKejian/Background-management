@@ -1,6 +1,6 @@
 <template>
   <div class="table">
-    <el-table :data="tableData" height="450" style="width: 100%">
+    <el-table :data="result" height="450" style="width: 100%">
       <el-table-column prop="num" label="编号" width="180" />
       <el-table-column prop="firstname" label="商品品牌" width="180" />
       <el-table-column prop="lastname" label="商品名称" width="180" />
@@ -41,17 +41,25 @@
   </div>
 </template>
 <script setup lang='ts'>
-import { onMounted, reactive, ref, toRefs } from 'vue'
+import { onMounted, reactive, computed, ref, toRefs, watch } from 'vue'
 import { ElMessage } from 'element-plus'
 import { useProductStore } from '@/stores/product'
 import { getProductList, deleteProduct } from '@/request/api'
 
 const useProduct = useProductStore()
+
+const result = computed(() => {
+  return useProduct.allList.slice(0, 10)
+})
+watch(result, (newVal, oldVal) => {
+  console.log(newVal, oldVal);
+  state.total = useProduct.allList.length
+})
 const state = reactive<{
   total: number
   pageSize: number
   tableData: listRole[]
-  Data: listRole[]
+  Data: []
 }>({
   total: 0,
   pageSize: 1,
@@ -66,7 +74,7 @@ const modify = (row: listRole) => {
 }
 const handleCurrentChange = (val: number) => {
   state.pageSize = val
-  tableData.value = Data.value.slice((state.pageSize - 1) * 10, state.pageSize * 10)
+  useProduct.allList = Data.value.slice((state.pageSize - 1) * 10, state.pageSize * 10)
 }
 
 const confirm = (num: number) => {
@@ -80,9 +88,10 @@ const confirm = (num: number) => {
 }
 const getProduct = () => {
   getProductList().then(res => {
+    useProduct.allList = res.data
     tableData.value = res.data.slice(0, 10)
     Data.value = res.data
-    state.total = res.data.length
+    state.total = useProduct.allList.length
   })
 }
 onMounted(() => {
